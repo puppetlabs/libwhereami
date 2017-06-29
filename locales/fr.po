@@ -1,0 +1,104 @@
+# French translation of cpp-project-template.pot
+# Copyright (C) 2016 Puppet <docs@puppet.com>
+# This file is distributed under the same license as the cpp-project-template package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: cpp-project-template 0.2.0\n"
+"Report-Msgid-Bugs-To: docs@puppet.com\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2016-07-31 20:25-0700\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr_FR.utf8\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.8\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: exe/cpp-project-template.cc
+msgid ""
+"Synopsis\n"
+"========\n"
+"\n"
+"Example command-line utility.\n"
+"\n"
+"Usage\n"
+"=====\n"
+"\n"
+"  cpp-project-template [options]\n"
+"\n"
+"Options\n"
+"=======\n"
+"\n"
+"{1}\n"
+"Description\n"
+"===========\n"
+"\n"
+"Displays its own version string."
+msgstr ""
+"Carnet de bord\n"
+"==============\n"
+"\n"
+"Utilitaire de ligne de commande de l’exemple.\n"
+"\n"
+"Utilisation\n"
+"===========\n"
+"\n"
+"  cpp-project-template [options]\n"
+"\n"
+"Options\n"
+"=======\n"
+"\n"
+"{1}\n"
+"Description\n"
+"===========\n"
+"\n"
+"Affiche sa propre chaîne de version."
+
+#: exe/cpp-project-template.cc
+msgid "Enable full debugging."
+msgstr "Activer le débogage complet."
+
+#: exe/cpp-project-template.cc
+msgid "Print this help message."
+msgstr "Produire le message d’aide"
+
+#: exe/cpp-project-template.cc
+msgid "Silences all output."
+msgstr "Silences toutes les sorties."
+
+#: exe/cpp-project-template.cc
+msgid "Enable verbosity."
+msgstr "Activer verbosité."
+
+#: exe/cpp-project-template.cc
+msgid "Print the program's version number and exit."
+msgstr "Imprimer la version de make API de et sortir."
+
+#: exe/cpp-project-template.cc
+msgid ""
+"Set logging level.\n"
+"Supported levels are: none, trace, debug, info, warn, error, and fatal."
+msgstr ""
+"Réglez le niveau d’enregistrement.\n"
+"Niveaux de prises en charge sont : aucun, trace, debug, info, warn, error et "
+"fatal."
+
+#: exe/cpp-project-template.cc
+msgid "Error: {1}"
+msgstr "Erreur: {1}"
+
+#: exe/cpp-project-template.cc
+msgid "unhandled exception: {1}"
+msgstr "exception non gérée: {1}"
+
+#: exe/cpp-project-template.cc
+msgid "Hello!"
+msgstr "Salut!"
+
+#. debug
+#: lib/src/cpp-project-template.cc
+msgid "cpp-project-template version is {1}"
+msgstr "cpp-project-template de version est {1}"

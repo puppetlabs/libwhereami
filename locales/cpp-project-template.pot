@@ -1,0 +1,83 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Puppet <docs@puppet.com>
+# This file is distributed under the same license as the cpp-project-template package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: cpp-project-template 0.2.0\n"
+"Report-Msgid-Bugs-To: docs@puppet.com\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: exe/cpp-project-template.cc
+msgid ""
+"Synopsis\n"
+"========\n"
+"\n"
+"Example command-line utility.\n"
+"\n"
+"Usage\n"
+"=====\n"
+"\n"
+"  cpp-project-template [options]\n"
+"\n"
+"Options\n"
+"=======\n"
+"\n"
+"{1}\n"
+"Description\n"
+"===========\n"
+"\n"
+"Displays its own version string."
+msgstr ""
+
+#: exe/cpp-project-template.cc
+msgid "Enable full debugging."
+msgstr ""
+
+#: exe/cpp-project-template.cc
+msgid "Print this help message."
+msgstr ""
+
+#: exe/cpp-project-template.cc
+msgid "Silences all output."
+msgstr ""
+
+#: exe/cpp-project-template.cc
+msgid "Enable verbosity."
+msgstr ""
+
+#: exe/cpp-project-template.cc
+msgid "Print the program's version number and exit."
+msgstr ""
+
+#: exe/cpp-project-template.cc
+msgid ""
+"Set logging level.\n"
+"Supported levels are: none, trace, debug, info, warn, error, and fatal."
+msgstr ""
+
+#: exe/cpp-project-template.cc
+msgid "Error: {1}"
+msgstr ""
+
+#: exe/cpp-project-template.cc
+msgid "unhandled exception: {1}"
+msgstr ""
+
+#: exe/cpp-project-template.cc
+msgid "Hello!"
+msgstr ""
+
+#. debug
+#: lib/src/cpp-project-template.cc
+msgid "cpp-project-template version is {1}"
+msgstr ""
