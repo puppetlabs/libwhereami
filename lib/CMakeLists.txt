@@ -17,7 +17,10 @@ leatherman_logging_namespace("puppetlabs.${PROJECT_NAME}")
 # Setup compiling the library.
 include_directories(inc ${Boost_INCLUDE_DIRS} ${LEATHERMAN_INCLUDE_DIRS})
 
-set(PROJECT_SOURCES "src/${PROJECT_NAME}.cc")
+set(PROJECT_SOURCES
+    "src/${PROJECT_NAME}.cc"
+    "src/detectors/virtualbox_detector.cc"
+    "src/sources/dmi_source.cc")
 
 ## An object target is generated that can be used by both the library and test executable targets.
 ## Without the intermediate target, unexported symbols can't be tested.
