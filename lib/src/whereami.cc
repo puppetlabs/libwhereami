@@ -2,6 +2,7 @@
 #include <whereami/version.h>
 #include <internal/vm.hpp>
 #include <internal/sources/dmi_source.hpp>
+#include <internal/sources/cpuid_source.hpp>
 #include <internal/detectors/virtualbox_detector.hpp>
 #include <leatherman/logging/logging.hpp>
 
@@ -20,8 +21,9 @@ namespace whereami {
     {
         vector<string> result;
         sources::dmi dmi_source;
+        sources::cpuid cpuid_source;
 
-        auto virtualbox_result = detectors::virtualbox(dmi_source);
+        auto virtualbox_result = detectors::virtualbox(cpuid_source, dmi_source);
 
         if (virtualbox_result) {
             result.emplace_back(vm::virtualbox);

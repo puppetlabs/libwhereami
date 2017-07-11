@@ -5,7 +5,9 @@ set(TEST_CASES
     "${PROJECT_NAME}.cc"
     "detectors/virtualbox_detector.cc"
     "fixtures.cc"
+    "fixtures/cpuid_fixtures.cc"
     "fixtures/dmi_fixtures.cc"
+    "sources/cpuid_source.cc"
     "sources/dmi_source.cc")
 
 add_executable(lib${PROJECT_NAME}_test $<TARGET_OBJECTS:libprojectsrc> ${TEST_CASES} main.cc)
