@@ -21,7 +21,7 @@ SCENARIO("Using the VirtualBox detector") {
             "VirtualBox",
             "Oracle Corporation",
             "innotek GmbH",
-            "VirtualBox", });
+            "VirtualBox", {}});
         THEN("it should return true") {
             REQUIRE(virtualbox(cpuid_source, dmi_source));
         }
@@ -48,7 +48,7 @@ SCENARIO("Using the VirtualBox detector") {
             "Other",
             "Other",
             "Other",
-            "Other", });
+            "Other", {}});
         THEN("it should return false") {
             REQUIRE_FALSE(virtualbox(cpuid_source, dmi_source));
         }

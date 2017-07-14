@@ -5,6 +5,7 @@
 #include <leatherman/execution/execution.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/algorithm/string.hpp>
+#include <unordered_map>
 
 using namespace std;
 using namespace boost::filesystem;
@@ -39,6 +40,14 @@ namespace whereami { namespace sources {
         return data_ ? data_->manufacturer : "";
     }
 
+    std::vector<std::string> dmi_base::oem_strings() const
+    {
+        if (data_) {
+            return data_->oem_strings;
+        }
+        return {};
+    }
+
     dmi::dmi()
     {
         collect_data();
@@ -46,9 +55,11 @@ namespace whereami { namespace sources {
 
     void dmi::collect_data()
     {
-        collect_data_from_sys();
-        if (data_.get() == nullptr) {
-            collect_data_from_dmidecode();
+        // Attempt to use dmidecode first, because it yields extra metadata (requires root)
+        collect_data_from_dmidecode();
+        if (!data_) {
+            // Otherwise, collect most of dmidecode's data from user-accessible files in /sys/
+            collect_data_from_sys();
         }
     }
 
@@ -62,7 +73,9 @@ namespace whereami { namespace sources {
         // Check that /sys/class/dmi exists
         bs::error_code ec;
         if (is_directory(sys_path(), ec)) {
-            data_.reset(new dmi_data);
+            if (!data_) {
+                data_.reset(new dmi_data);
+            }
             data_->bios_vendor = read_file(sys_path("bios_vendor"));
             data_->board_manufacturer = read_file(sys_path("board_vendor"));
             data_->board_product_name = read_file(sys_path("board_name"));
@@ -119,31 +132,36 @@ namespace whereami { namespace sources {
 
     void dmi::parse_dmidecode_line(string& line, int& dmi_type)
     {
-        static const boost::regex dmi_section_pattern{"^Handle 0x.{4}, DMI type (\\d{1,3})"};
+        static const boost::regex dmi_section_pattern {"^Handle 0x.{4}, DMI type (\\d{1,3})"};
 
-        // Stores the relevant sections; this is in order based on DMI type ID
-        // Ensure there's a trailing semicolon on each entry and keep in sync with the switch statement below
-        static const vector<vector<string>> sections{
-            {   // BIOS (0)
+        // Stores the relevant DMI sections
+        static const unordered_map<int, vector<string>> sections {
+            { 0, {  // BIOS
                 "vendor:",
-            },
-            {   // System (1)
+            }},
+            { 1, {  // System
                 "manufacturer:",
                 "product name:",
-            },
-            {   // Base Board (2)
-                "manufacturer:",
-                "product name:",
-            }
+            }},
+            { 2, {  // Base Board
+               "manufacturer:",
+               "product name:",
+            }},
+            { 11, {  // OEM Strings
+                "string 1:",
+                "string 2:",
+                "string 3:",
+            }}
         };
 
-        // Check for a section header
+        // Check whether this line contains a section header
         if (re_search(line, dmi_section_pattern, &dmi_type)) {
             return;
         }
 
-        // Check that we're in a relevant section
-        if (dmi_type < 0 || static_cast<size_t>(dmi_type) >= sections.size()) {
+        // Check that it's a relevant section
+        auto const& section_it = sections.find(dmi_type);
+        if (section_it == sections.end()) {
             return;
         }
 
@@ -151,7 +169,7 @@ namespace whereami { namespace sources {
         boost::trim_left(line);
 
         // Find a matching header
-        auto const& headers = sections[dmi_type];
+        auto const& headers = (*section_it).second;
         auto it = find_if(headers.begin(), headers.end(), [&](string const& header) {
             return boost::istarts_with(line, header);
         });
@@ -160,46 +178,50 @@ namespace whereami { namespace sources {
         }
 
         // Get the value and trim it
-        string value{line.substr(it->size())};
+        string value {line.substr(it->size())};
         boost::trim(value);
 
         // Calculate the index into the header vector
         auto index = it - headers.begin();
 
+        if (!data_) {
+            data_.reset(new dmi_data);
+        }
+
         // Assign to the appropriate member
-        string* member{nullptr};
         switch (dmi_type) {
             case 0: {  // BIOS information
                 if (index == 0) {
-                    member = &data_->bios_vendor;
+                    data_->bios_vendor = move(value);
                 }
                 break;
             }
 
             case 1: {  // System information
                 if (index == 0) {
-                    member = &data_->manufacturer;
+                    data_->manufacturer = move(value);
                 } else if (index == 1 || index == 2) {
-                    member = &data_->product_name;
+                    data_->product_name = move(value);
                 }
                 break;
             }
 
             case 2: {  // Base board information
                 if (index == 0) {
-                    member = &data_->board_manufacturer;
+                    data_->board_manufacturer = move(value);
                 } else if (index == 1 || index == 2) {
-                    member = &data_->board_product_name;
+                    data_->board_product_name = move(value);
                 }
+                break;
+            }
+
+            case 11: {  // OEM strings
+                data_->oem_strings.emplace_back(move(value));
                 break;
             }
 
             default:
                 break;
-        }
-
-        if (member) {
-            *member = std::move(value);
         }
     }
 

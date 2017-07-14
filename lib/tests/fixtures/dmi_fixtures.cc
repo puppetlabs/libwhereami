@@ -6,28 +6,23 @@ using namespace std;
 
 namespace whereami { namespace testing { namespace dmi {
 
-    dmi_fixture_sys::dmi_fixture_sys(const char* base_directory)
-        : base_directory_(base_directory)
+    dmi_fixture::dmi_fixture(std::string dmidecode_path, std::string sys_path)
+        : dmidecode_fixture_path_(dmidecode_path), sys_fixture_path_(sys_path)
     {
-        collect_data_from_sys();
+        data_.reset(nullptr);
+        collect_data();
     }
 
-    std::string dmi_fixture_sys::sys_path(std::string const& filename) const
+    std::string dmi_fixture::sys_path(std::string const& filename = "") const
     {
-        return fixture_root + base_directory_ + filename;
+        return fixture_root + sys_fixture_path_ + filename;
     }
 
-    dmi_fixture_dmidecode::dmi_fixture_dmidecode(const char* dmidecode_fixture_path)
-        : dmidecode_fixture_path_(dmidecode_fixture_path)
-    {
-        collect_data_from_dmidecode();
-    }
-    void dmi_fixture_dmidecode::collect_data_from_dmidecode()
+    void dmi_fixture::collect_data_from_dmidecode()
     {
         int dmi_type = -1;
         std::string dmidecode_output;
         if (!load_fixture(dmidecode_fixture_path_, dmidecode_output)) return;
-        data_.reset(new dmi_data);
         leatherman::util::each_line(dmidecode_output, [&](string& line) {
             parse_dmidecode_line(line, dmi_type);
             return true;

@@ -8,7 +8,7 @@
 
 namespace whereami { namespace testing {
 
-    static const auto fixture_root = std::string{std::string{LIBWHEREAMI_TESTS_DIRECTORY} + "/fixtures"};
+    static const auto fixture_root = std::string{std::string{LIBWHEREAMI_TESTS_DIRECTORY} + "/fixtures/"};
 
     bool load_fixture(std::string const& name, std::string& data);
 

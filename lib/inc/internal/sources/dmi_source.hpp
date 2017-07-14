@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <string>
+#include <vector>
 
 namespace whereami { namespace sources {
 
@@ -35,6 +36,11 @@ namespace whereami { namespace sources {
          * via /sys/class/dmi/id/product_name or dmidecode section 1 product name
          */
         std::string product_name;
+        /**
+         * OEM strings
+         * Only available via dmidecode section 11 (requires root)
+         */
+        std::vector<std::string> oem_strings;
     };
 
     /**
@@ -70,6 +76,11 @@ namespace whereami { namespace sources {
          * @return The product name
          */
         std::string product_name() const;
+        /**
+         * Retrieve any OEM strings
+         * @return A vector of OEM strings
+         */
+        std::vector<std::string> oem_strings() const;
     protected:
         /**
          * Collected data for this machine based on DMI information
