@@ -11,7 +11,7 @@ using namespace whereami::testing::dmi;
 using namespace whereami::testing::cpuid;
 
 SCENARIO("Using the VirtualBox detector") {
-    WHEN("running on a Linux VirtualBox guest") {
+    WHEN("running on a Linux VirtualBox guest with root") {
         cpuid_fixture_values cpuid_source({
             {VENDOR_LEAF,        register_fixtures::VENDOR_KVMKVMKVM},
             {HYPERVISOR_PRESENT, register_fixtures::HYPERVISOR_PRESENT},
@@ -21,9 +21,40 @@ SCENARIO("Using the VirtualBox detector") {
             "VirtualBox",
             "Oracle Corporation",
             "innotek GmbH",
-            "VirtualBox", {}});
-        THEN("it should return true") {
-            REQUIRE(virtualbox(cpuid_source, dmi_source));
+            "VirtualBox",
+            {
+                "vboxVer_5.1.22",
+                "vboxRev_115126",
+            }});
+        auto res = virtualbox(cpuid_source, dmi_source);
+        THEN("the result should be valid") {
+            REQUIRE(res.valid());
+        }
+        AND_THEN("the result should contain privileged VirtualBox metadata") {
+            REQUIRE(res.get<string>("version") == "5.1.22");
+            REQUIRE(res.get<string>("revision") == "115126");
+        }
+    }
+
+    WHEN("running on a Linux VirtualBox guest without root") {
+        cpuid_fixture_values cpuid_source({
+            {VENDOR_LEAF,        register_fixtures::VENDOR_KVMKVMKVM},
+            {HYPERVISOR_PRESENT, register_fixtures::HYPERVISOR_PRESENT},
+        });
+        dmi_fixture_values dmi_source({
+            "VirtualBox",
+            "VirtualBox",
+            "Oracle Corporation",
+            "innotek GmbH",
+            "VirtualBox",
+            {}});
+        auto const& res = virtualbox(cpuid_source, dmi_source);
+        THEN("the result should be valid") {
+            REQUIRE(res.valid());
+        }
+        AND_THEN("the result should not contain privileged VirtualBox metadata") {
+            REQUIRE(res.get<string>("version") == "");
+            REQUIRE(res.get<string>("revision") == "");
         }
     }
 
@@ -33,8 +64,9 @@ SCENARIO("Using the VirtualBox detector") {
             {HYPERVISOR_PRESENT, register_fixtures::HYPERVISOR_PRESENT}
         });
         dmi_fixture_empty dmi_source;
-        THEN("it should return true") {
-            REQUIRE(virtualbox(cpuid_source, dmi_source));
+        THEN("the result should be valid") {
+            auto res = virtualbox(cpuid_source, dmi_source);
+            REQUIRE(res.valid());
         }
     }
 
@@ -48,9 +80,11 @@ SCENARIO("Using the VirtualBox detector") {
             "Other",
             "Other",
             "Other",
-            "Other", {}});
-        THEN("it should return false") {
-            REQUIRE_FALSE(virtualbox(cpuid_source, dmi_source));
+            "Other",
+            {}});
+        THEN("the result should not be valid") {
+            auto res = virtualbox(cpuid_source, dmi_source);
+            REQUIRE_FALSE(res.valid());
         }
     }
 }

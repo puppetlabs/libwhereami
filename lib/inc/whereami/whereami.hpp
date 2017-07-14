@@ -1,6 +1,6 @@
 #pragma once
 
-#include <string>
+#include <internal/detectors/result.hpp>
 #include <vector>
 #include "export.h"
 
@@ -16,6 +16,6 @@ namespace whereami {
      * Try to detect whether this machine is a guest on any hypervisors
      * @return A vector of detected hypervisor names
      */
-    std::vector<std::string> LIBWHEREAMI_EXPORT hypervisors();
+    std::vector<detectors::result> LIBWHEREAMI_EXPORT hypervisors();
 
 }  // namespace whereami
