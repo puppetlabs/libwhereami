@@ -12,47 +12,54 @@ using namespace whereami::testing::dmi;
 
 
 SCENARIO("Using the DMI data source") {
-    WHEN("DMI is not available") {
-        dmi_fixture_empty dmi_source;
-        THEN("nothing should be found") {
-            REQUIRE(dmi_source.bios_vendor().empty());
-            REQUIRE(dmi_source.board_manufacturer().empty());
-            REQUIRE(dmi_source.board_product_name().empty());
-            REQUIRE(dmi_source.manufacturer().empty());
-            REQUIRE(dmi_source.product_name().empty());
-        }
-    }
-
-    WHEN("DMI data is available in /sys/class/dmi/id/") {
-        dmi_fixture_sys dmi_source("/sys/dmi/virtualbox/");
-        THEN("all fields should be populated via /sys/") {
+    WHEN("DMI data is read from /sys/class/dmi/id/") {
+        dmi_fixture dmi_source {
+            dmi_fixtures::DMIDECODE_NONE,
+            dmi_fixtures::SYS_VIRTUALBOX
+        };
+        THEN("string fields are populated via /sys/") {
             REQUIRE(dmi_source.bios_vendor() == "innotek GmbH");
             REQUIRE(dmi_source.board_manufacturer() == "Oracle Corporation");
             REQUIRE(dmi_source.board_product_name() == "VirtualBox");
             REQUIRE(dmi_source.manufacturer() == "innotek GmbH");
             REQUIRE(dmi_source.product_name() == "VirtualBox");
         }
-    }
-
-    WHEN("Using dmidecode when data is not available") {
-        dmi_fixture_dmidecode dmi_source{"dmidecode/none.txt"};
-        THEN("nothing should be found") {
-            REQUIRE(dmi_source.bios_vendor().empty());
-            REQUIRE(dmi_source.board_manufacturer().empty());
-            REQUIRE(dmi_source.board_product_name().empty());
-            REQUIRE(dmi_source.manufacturer().empty());
-            REQUIRE(dmi_source.product_name().empty());
+        THEN("OEM strings are unavailable without dmidecode") {
+            REQUIRE(dmi_source.oem_strings().size() == 0);
         }
     }
 
-    WHEN("Using dmidecode when data is available") {
-        dmi_fixture_dmidecode dmi_source{"dmidecode/virtualbox.txt"};
-        THEN("all fields should be populated via dmidecode") {
-            REQUIRE(dmi_source.bios_vendor() == "innotek GmbH");
-            REQUIRE(dmi_source.board_manufacturer() == "Oracle Corporation");
-            REQUIRE(dmi_source.board_product_name() == "VirtualBox");
-            REQUIRE(dmi_source.manufacturer() == "innotek GmbH");
-            REQUIRE(dmi_source.product_name() == "VirtualBox");
+    WHEN("DMI data is read from dmidecode") {
+        AND_WHEN("output exists but there is no data available") {
+            dmi_fixture dmi_source {
+                dmi_fixtures::DMIDECODE_NONE,
+                dmi_fixtures::SYS_NONE
+            };
+            THEN("nothing is found") {
+                REQUIRE(dmi_source.bios_vendor().empty());
+                REQUIRE(dmi_source.board_manufacturer().empty());
+                REQUIRE(dmi_source.board_product_name().empty());
+                REQUIRE(dmi_source.manufacturer().empty());
+                REQUIRE(dmi_source.product_name().empty());
+                REQUIRE(dmi_source.oem_strings().size() == 0);
+            }
+        }
+
+        AND_WHEN("output exists and data is available") {
+            dmi_fixture dmi_source {
+                dmi_fixtures::DMIDECODE_VIRTUALBOX,
+                dmi_fixtures::SYS_NONE
+            };
+            THEN("all fields are populated via dmidecode") {
+                REQUIRE(dmi_source.bios_vendor() == "innotek GmbH");
+                REQUIRE(dmi_source.board_manufacturer() == "Oracle Corporation");
+                REQUIRE(dmi_source.board_product_name() == "VirtualBox");
+                REQUIRE(dmi_source.manufacturer() == "innotek GmbH");
+                REQUIRE(dmi_source.product_name() == "VirtualBox");
+                REQUIRE(dmi_source.oem_strings().size() == 2);
+                REQUIRE(dmi_source.oem_strings()[0] == "vboxVer_5.1.22");
+                REQUIRE(dmi_source.oem_strings()[1] == "vboxRev_115126");
+            }
         }
     }
 }

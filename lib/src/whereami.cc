@@ -8,6 +8,7 @@
 
 using namespace std;
 using namespace whereami;
+using namespace whereami::detectors;
 
 namespace whereami {
 
@@ -17,18 +18,18 @@ namespace whereami {
         return WHEREAMI_VERSION_WITH_COMMIT;
     }
 
-    vector<string> hypervisors()
+    vector<result> hypervisors()
     {
-        vector<string> result;
+        vector<result> results;
         sources::dmi dmi_source;
         sources::cpuid cpuid_source;
 
         auto virtualbox_result = detectors::virtualbox(cpuid_source, dmi_source);
 
-        if (virtualbox_result) {
-            result.emplace_back(vm::virtualbox);
+        if (virtualbox_result.valid()) {
+            results.emplace_back(virtualbox_result);
         }
 
-        return result;
+        return results;
     }
 }  // namespace whereami

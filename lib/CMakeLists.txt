@@ -19,6 +19,8 @@ include_directories(inc ${Boost_INCLUDE_DIRS} ${LEATHERMAN_INCLUDE_DIRS})
 
 set(PROJECT_SOURCES
     "src/${PROJECT_NAME}.cc"
+    "src/detectors/metadata.cc"
+    "src/detectors/result.cc"
     "src/detectors/virtualbox_detector.cc"
     "src/sources/cpuid_source.cc"
     "src/sources/dmi_source.cc")
