@@ -6,6 +6,7 @@ set(TEST_CASES
     "detectors/metadata.cc"
     "detectors/result.cc"
     "detectors/virtualbox_detector.cc"
+    "detectors/vmware_detector.cc"
     "fixtures.cc"
     "fixtures/cpuid_fixtures.cc"
     "fixtures/dmi_fixtures.cc"
