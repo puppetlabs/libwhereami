@@ -15,6 +15,11 @@ using namespace leatherman::util;
 
 namespace whereami { namespace sources {
 
+    std::string dmi_base::bios_address() const
+    {
+        return data_ ? data_->bios_address : "";
+    }
+
     std::string dmi_base::bios_vendor() const
     {
         return data_ ? data_->bios_vendor : "";
@@ -138,6 +143,7 @@ namespace whereami { namespace sources {
         static const unordered_map<int, vector<string>> sections {
             { 0, {  // BIOS
                 "vendor:",
+                "address:",
             }},
             { 1, {  // System
                 "manufacturer:",
@@ -193,6 +199,9 @@ namespace whereami { namespace sources {
             case 0: {  // BIOS information
                 if (index == 0) {
                     data_->bios_vendor = move(value);
+                }
+                if (index == 1) {
+                    data_->bios_address = move(value);
                 }
                 break;
             }

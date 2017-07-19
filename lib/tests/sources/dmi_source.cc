@@ -17,14 +17,15 @@ SCENARIO("Using the DMI data source") {
             dmi_fixtures::DMIDECODE_NONE,
             dmi_fixtures::SYS_VIRTUALBOX
         };
-        THEN("string fields are populated via /sys/") {
+        THEN("accessible string fields are populated via /sys/") {
             REQUIRE(dmi_source.bios_vendor() == "innotek GmbH");
             REQUIRE(dmi_source.board_manufacturer() == "Oracle Corporation");
             REQUIRE(dmi_source.board_product_name() == "VirtualBox");
             REQUIRE(dmi_source.manufacturer() == "innotek GmbH");
             REQUIRE(dmi_source.product_name() == "VirtualBox");
         }
-        THEN("OEM strings are unavailable without dmidecode") {
+        THEN("privileged data is unavailable without dmidecode") {
+            REQUIRE(dmi_source.bios_address().empty());
             REQUIRE(dmi_source.oem_strings().size() == 0);
         }
     }
@@ -36,6 +37,7 @@ SCENARIO("Using the DMI data source") {
                 dmi_fixtures::SYS_NONE
             };
             THEN("nothing is found") {
+                REQUIRE(dmi_source.bios_address().empty());
                 REQUIRE(dmi_source.bios_vendor().empty());
                 REQUIRE(dmi_source.board_manufacturer().empty());
                 REQUIRE(dmi_source.board_product_name().empty());
@@ -51,6 +53,7 @@ SCENARIO("Using the DMI data source") {
                 dmi_fixtures::SYS_NONE
             };
             THEN("all fields are populated via dmidecode") {
+                REQUIRE(dmi_source.bios_address() == "0xE0000");
                 REQUIRE(dmi_source.bios_vendor() == "innotek GmbH");
                 REQUIRE(dmi_source.board_manufacturer() == "Oracle Corporation");
                 REQUIRE(dmi_source.board_product_name() == "VirtualBox");
