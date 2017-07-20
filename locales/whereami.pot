@@ -1,0 +1,48 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Puppet <docs@puppet.com>
+# This file is distributed under the same license as the whereami package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: whereami 0.1.0\n"
+"Report-Msgid-Bugs-To: docs@puppet.com\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. debug
+#: lib/src/sources/dmi_source.cc
+msgid " cannot be accessed."
+msgstr ""
+
+#. debug
+#: lib/src/sources/dmi_source.cc
+msgid "Using dmidecode to query DMI information."
+msgstr ""
+
+#. debug
+#: lib/src/sources/dmi_source.cc
+msgid "dmidecode executable not found"
+msgstr ""
+
+#. debug
+#: lib/src/sources/dmi_source.cc
+msgid "{1}: {2}."
+msgstr ""
+
+#. debug
+#: lib/src/sources/dmi_source.cc
+msgid "{1}: file could not be read."
+msgstr ""
+
+#. debug
+#: lib/src/whereami.cc
+msgid "whereami version is {1}"
+msgstr ""
