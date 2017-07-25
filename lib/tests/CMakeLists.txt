@@ -5,6 +5,7 @@ set(TEST_CASES
     "${PROJECT_NAME}.cc"
     "detectors/metadata.cc"
     "detectors/result.cc"
+    "detectors/docker_detector.cc"
     "detectors/virtualbox_detector.cc"
     "detectors/vmware_detector.cc"
     "fixtures.cc"
