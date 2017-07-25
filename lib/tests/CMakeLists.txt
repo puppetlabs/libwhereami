@@ -10,6 +10,7 @@ set(TEST_CASES
     "fixtures.cc"
     "fixtures/cpuid_fixtures.cc"
     "fixtures/dmi_fixtures.cc"
+    "sources/cgroup_source.cc"
     "sources/cpuid_source.cc"
     "sources/dmi_source.cc")
 

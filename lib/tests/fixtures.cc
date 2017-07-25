@@ -16,9 +16,9 @@ using namespace boost::filesystem;
 
 namespace whereami { namespace testing {
 
-    bool load_fixture(string const& name, string& data)
+    bool load_fixture(string const& base_path, string& data)
     {
-        string path {string {LIBWHEREAMI_TESTS_DIRECTORY} + "/fixtures/" + name};
+        auto path = fixture_full_path(base_path);
         boost::nowide::ifstream in(path.c_str(), ios_base::in | ios_base::binary);
         if (!in) {
             return false;
@@ -27,6 +27,11 @@ namespace whereami { namespace testing {
         buffer << in.rdbuf();
         data = buffer.str();
         return true;
+    }
+
+    std::string fixture_full_path(std::string const& base_path)
+    {
+        return string {LIBWHEREAMI_TESTS_DIRECTORY} + "/fixtures/" + base_path;
     }
 
 }}  // namespace whereami::testing
