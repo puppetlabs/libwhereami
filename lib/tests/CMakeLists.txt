@@ -7,6 +7,7 @@ set(TEST_CASES
     "detectors/result.cc"
     "detectors/docker_detector.cc"
     "detectors/lxc_detector.cc"
+    "detectors/nspawn_detector.cc"
     "detectors/virtualbox_detector.cc"
     "detectors/vmware_detector.cc"
     "fixtures.cc"
