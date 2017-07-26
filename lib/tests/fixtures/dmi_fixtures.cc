@@ -6,7 +6,7 @@ using namespace std;
 
 namespace whereami { namespace testing { namespace dmi {
 
-    dmi_fixture::dmi_fixture(std::string dmidecode_path, std::string sys_path)
+    dmi_fixture::dmi_fixture(std::string const& dmidecode_path, std::string const& sys_path)
         : dmidecode_fixture_path_(dmidecode_path), sys_fixture_path_(sys_path)
     {
         data_.reset(nullptr);

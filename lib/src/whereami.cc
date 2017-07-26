@@ -4,6 +4,7 @@
 #include <internal/sources/dmi_source.hpp>
 #include <internal/sources/cpuid_source.hpp>
 #include <internal/detectors/virtualbox_detector.hpp>
+#include <internal/detectors/vmware_detector.hpp>
 #include <leatherman/logging/logging.hpp>
 
 using namespace std;
@@ -28,6 +29,12 @@ namespace whereami {
 
         if (virtualbox_result.valid()) {
             results.emplace_back(virtualbox_result);
+        }
+
+        auto vmware_result = detectors::vmware(cpuid_source, dmi_source);
+
+        if (vmware_result.valid()) {
+            results.emplace_back(vmware_result);
         }
 
         return results;

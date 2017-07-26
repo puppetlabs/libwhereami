@@ -17,6 +17,7 @@ SCENARIO("Using the VirtualBox detector") {
             {HYPERVISOR_PRESENT, register_fixtures::HYPERVISOR_PRESENT},
         });
         dmi_fixture_values dmi_source({
+            "0x30000",
             "VirtualBox",
             "VirtualBox",
             "Oracle Corporation",
@@ -42,6 +43,7 @@ SCENARIO("Using the VirtualBox detector") {
             {HYPERVISOR_PRESENT, register_fixtures::HYPERVISOR_PRESENT},
         });
         dmi_fixture_values dmi_source({
+            "",
             "VirtualBox",
             "VirtualBox",
             "Oracle Corporation",
@@ -76,6 +78,7 @@ SCENARIO("Using the VirtualBox detector") {
             {HYPERVISOR_PRESENT, register_fixtures::HYPERVISOR_PRESENT}
         });
         dmi_fixture_values dmi_source({
+            "Other",
             "Other",
             "Other",
             "Other",

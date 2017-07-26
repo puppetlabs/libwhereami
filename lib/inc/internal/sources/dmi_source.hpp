@@ -12,6 +12,11 @@ namespace whereami { namespace sources {
     struct dmi_data
     {
         /**
+         * The BIOS address
+         * Only available via dmidecode section 0 (requires root)
+         */
+        std::string bios_address;
+        /**
          * The name of the BIOS vendor
          * via /sys/class/dmi/id/bios_vendor or dmidecode section 0 vendor
          */
@@ -51,6 +56,11 @@ namespace whereami { namespace sources {
     public:
         dmi_base() {}
         virtual ~dmi_base() {}
+        /**
+         * Retrieve the BIOS address
+         * @return The BIOS address
+         */
+        std::string bios_address() const;
         /**
          * Retrieve the BIOS vendor
          * @return The BIOS vendor's name

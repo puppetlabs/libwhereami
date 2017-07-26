@@ -23,8 +23,8 @@ namespace whereami { namespace testing { namespace dmi {
      */
     class dmi_fixture : public sources::dmi {
     public:
-        dmi_fixture(std::string dmidecode_path = dmi_fixtures::DMIDECODE_NONE,
-                    std::string sys_path       = dmi_fixtures::SYS_NONE);
+        dmi_fixture(std::string const& dmidecode_path = dmi_fixtures::DMIDECODE_NONE,
+                    std::string const& sys_path       = dmi_fixtures::SYS_NONE);
     protected:
         /**
          * Read /sys/ data from a fixture base path (instead of from /sys/)
