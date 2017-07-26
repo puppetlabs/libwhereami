@@ -5,6 +5,7 @@
 #include <internal/sources/cgroup_source.hpp>
 #include <internal/sources/cpuid_source.hpp>
 #include <internal/detectors/docker_detector.hpp>
+#include <internal/detectors/lxc_detector.hpp>
 #include <internal/detectors/virtualbox_detector.hpp>
 #include <internal/detectors/vmware_detector.hpp>
 #include <leatherman/logging/logging.hpp>
@@ -44,6 +45,12 @@ namespace whereami {
 
         if (docker_result.valid()) {
             results.emplace_back(docker_result);
+        }
+
+        auto lxc_result = detectors::lxc(cgroup_source);
+
+        if (lxc_result.valid()) {
+            results.emplace_back(lxc_result);
         }
 
         return results;
