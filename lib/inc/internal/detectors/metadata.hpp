@@ -6,7 +6,7 @@
 namespace whereami { namespace detectors {
 
     /**
-     * Metadata values can be string or boolean
+     * Metadata values can be string, boolean, or int
      */
     using metadata_value = boost::variant<std::string, bool, int>;
 

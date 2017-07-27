@@ -13,9 +13,9 @@ namespace whereami { namespace testing { namespace dmi {
      */
     namespace dmi_fixtures {
         static const std::string SYS_NONE = "<none>";
-        static const std::string SYS_VIRTUALBOX = "sys/dmi/virtualbox/";
-        static const std::string DMIDECODE_NONE = "dmidecode/none.txt";
-        static const std::string DMIDECODE_VIRTUALBOX = "dmidecode/virtualbox.txt";
+        static const std::string SYS_VIRTUALBOX = "filesystem/dmi_source/virtualbox_root/sys/class/dmi/id/";
+        static const std::string DMIDECODE_NONE = "output/dmidecode/none.txt";
+        static const std::string DMIDECODE_VIRTUALBOX = "output/dmidecode/virtualbox.txt";
     }
 
     /**

@@ -91,7 +91,7 @@ namespace whereami { namespace vm {
     constexpr static char const* vserver{"vserver"};
 
     /**
-     * The name for OpenVZ virtual machine.
+     * The name for OpenVZ virtual machines.
      */
     constexpr static char const* openvz{"openvz"};
 

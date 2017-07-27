@@ -26,7 +26,7 @@ namespace whereami { namespace detectors {
 
         res.validate();
 
-        // For cloudlinux_root, /proc/lve/list is present, and/or /proc/vz is empty
+        // For cloudlinux, /proc/lve/list is present, and/or /proc/vz is empty
         res.set(
             "cloudlinux",
             is_regular_file(root + "proc/lve/list") ||

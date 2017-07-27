@@ -10,7 +10,7 @@ using namespace boost::filesystem;
 
 SCENARIO("Using the OpenVZ detector") {
     WHEN("Running in an OpenVZ container") {
-        auto res = openvz(fixture_full_path("filesystem/openvz/container_root/"));
+        auto res = openvz(fixture_full_path("filesystem/openvz_detector/container_root/"));
         THEN("the result is positive") {
             REQUIRE(res.valid());
         }
@@ -26,7 +26,7 @@ SCENARIO("Using the OpenVZ detector") {
     }
 
     WHEN("Running on an OpenVZ host") {
-        auto res = openvz(fixture_full_path("filesystem/openvz/host_root/"));
+        auto res = openvz(fixture_full_path("filesystem/openvz_detector/host_root/"));
         THEN("the result is positive") {
             REQUIRE(res.valid());
         }
@@ -42,7 +42,7 @@ SCENARIO("Using the OpenVZ detector") {
     }
 
     WHEN("Running on a Cloudlinux host") {
-        auto res = openvz(fixture_full_path("filesystem/openvz/cloudlinux_root/"));
+        auto res = openvz(fixture_full_path("filesystem/openvz_detector/cloudlinux_root/"));
         THEN("the result is positive") {
             REQUIRE(res.valid());
         }
