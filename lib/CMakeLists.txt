@@ -20,6 +20,7 @@ include_directories(inc ${Boost_INCLUDE_DIRS} ${LEATHERMAN_INCLUDE_DIRS})
 set(PROJECT_SOURCES
     "src/${PROJECT_NAME}.cc"
     "src/detectors/metadata.cc"
+    "src/detectors/openvz_detector.cc"
     "src/detectors/result.cc"
     "src/detectors/docker_detector.cc"
     "src/detectors/lxc_detector.cc"

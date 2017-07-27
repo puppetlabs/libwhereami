@@ -91,14 +91,9 @@ namespace whereami { namespace vm {
     constexpr static char const* vserver{"vserver"};
 
     /**
-     * The name for OpenVZ Hardware Node virtual machine.
+     * The name for OpenVZ virtual machine.
      */
-    constexpr static char const* openvz_hn{"openvzhn"};
-
-    /**
-     * The name for OpenVZ Virtual Environment virtual machine.
-     */
-    constexpr static char const* openvz_ve{"openvzve"};
+    constexpr static char const* openvz{"openvz"};
 
     /**
      * The name for KVM (QEMU) virtual machine.

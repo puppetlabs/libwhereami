@@ -4,6 +4,7 @@ include_directories(${LEATHERMAN_CATCH_INCLUDE})
 set(TEST_CASES
     "${PROJECT_NAME}.cc"
     "detectors/metadata.cc"
+    "detectors/openvz_detector.cc"
     "detectors/result.cc"
     "detectors/docker_detector.cc"
     "detectors/lxc_detector.cc"
