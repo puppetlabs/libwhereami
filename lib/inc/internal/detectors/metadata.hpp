@@ -8,7 +8,7 @@ namespace whereami { namespace detectors {
     /**
      * Metadata values can be string or boolean
      */
-    using metadata_value = boost::variant<std::string, bool>;
+    using metadata_value = boost::variant<std::string, bool, int>;
 
     /**
      * Metadata container
@@ -36,6 +36,13 @@ namespace whereami { namespace detectors {
          * @param value The value
          */
         void set(std::string const& key, bool value);
+
+        /**
+         * Set a key with an integer value
+         * @param key The key
+         * @param value The value
+         */
+        void set(std::string const& key, int value);
 
         /**
          * Retrieve a metadata value by key

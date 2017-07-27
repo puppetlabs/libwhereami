@@ -39,4 +39,15 @@ SCENARIO("Using a metadata object") {
             REQUIRE_THROWS_AS(data.get<string>("foo"), boost::bad_get);
         }
     }
+
+    WHEN("an integer metadata value is added") {
+        metadata data;
+        data.set("foo", 1);
+        THEN("it is retrievable as an integer") {
+            REQUIRE(data.get<int>("foo") == 1);
+        }
+        THEN("It is not retrievable as a boolean") {
+            REQUIRE_THROWS_AS(data.get<bool>("foo"), boost::bad_get);
+        }
+    }
 }
