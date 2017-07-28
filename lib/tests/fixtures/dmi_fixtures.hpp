@@ -1,3 +1,5 @@
+#pragma once
+
 #include "../fixtures.hpp"
 #include <internal/sources/dmi_source.hpp>
 #include <leatherman/util/strings.hpp>
@@ -6,36 +8,40 @@
 
 namespace whereami { namespace testing { namespace dmi {
 
-    using dmi_fixture_empty = sources::dmi_base;
-
-    /**
-     * Common fixture paths within the fixture base path
-     */
-    namespace dmi_fixtures {
-        static const std::string SYS_NONE = "<none>";
-        static const std::string SYS_VIRTUALBOX = "filesystem/dmi_source/virtualbox_root/sys/class/dmi/id/";
-        static const std::string DMIDECODE_NONE = "output/dmidecode/none.txt";
-        static const std::string DMIDECODE_VIRTUALBOX = "output/dmidecode/virtualbox.txt";
-    }
-
     /**
      * DMI data source relying on fixtures for dmidecode output and /sys/class/dmi/id/ files
      */
-    class dmi_fixture : public sources::dmi {
+    class dmi_fixture : public sources::dmi
+    {
     public:
-        dmi_fixture(std::string const& dmidecode_path = dmi_fixtures::DMIDECODE_NONE,
-                    std::string const& sys_path       = dmi_fixtures::SYS_NONE);
+        /**
+         * Common fixture paths within the fixture base path
+         */
+        constexpr static char const* SYS_NONE  {"<none>"};
+        constexpr static char const* SYS_VIRTUALBOX {"filesystem/dmi_source/virtualbox_root/sys/class/dmi/id/"};
+        constexpr static char const* DMIDECODE_NONE {"output/dmidecode/none.txt"};
+        constexpr static char const* DMIDECODE_VIRTUALBOX {"output/dmidecode/virtualbox.txt"};
+        /**
+         * Constructor specifying paths to fixture for /sys files and dmi output
+         * @param dmidecode_path
+         * @param sys_path
+         */
+        explicit dmi_fixture(std::string dmidecode_path = DMIDECODE_NONE,
+                             std::string sys_path       = SYS_NONE)
+            : dmidecode_fixture_path_(std::move(dmidecode_path)),
+              sys_fixture_path_(std::move(sys_path)) { }
+
     protected:
         /**
          * Read /sys/ data from a fixture base path (instead of from /sys/)
          * @return
          */
-        std::string sys_path(std::string const&) const override;
+        std::string sys_path(std::string const& filename = "") const override;
         /**
-         * Read dmidecode data from a fixture file (instead of the dmidecode executable output)
+         * Read dmidecode output data from a fixture file
          * @return
          */
-        void collect_data_from_dmidecode() override;
+        bool collect_data_from_dmidecode() override;
         /**
          * The dmidecode fixture file path
          */
@@ -49,10 +55,19 @@ namespace whereami { namespace testing { namespace dmi {
     /**
      * DMI data source relying on explicitly specified values
      */
-    class dmi_fixture_values : public sources::dmi_base {
+    class dmi_fixture_values : public sources::dmi
+    {
     public:
-        dmi_fixture_values(sources::dmi_data&& data);
-        ~dmi_fixture_values() {}
+        explicit dmi_fixture_values(sources::smbios_data&& data);
+    };
+
+    /**
+     * DMI data source with no information
+     */
+    class dmi_fixture_empty : public sources::dmi
+    {
+    protected:
+        sources::smbios_data const* data() override;
     };
 
 }}}  // namespace whereami::testing::dmi

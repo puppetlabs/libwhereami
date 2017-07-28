@@ -27,17 +27,17 @@ namespace whereami {
     vector<result> hypervisors()
     {
         vector<result> results;
-        sources::dmi dmi_source;
+        sources::dmi smbios_source;
         sources::cpuid cpuid_source;
         sources::cgroup cgroup_source;
 
-        auto virtualbox_result = detectors::virtualbox(cpuid_source, dmi_source);
+        auto virtualbox_result = detectors::virtualbox(cpuid_source, smbios_source);
 
         if (virtualbox_result.valid()) {
             results.emplace_back(virtualbox_result);
         }
 
-        auto vmware_result = detectors::vmware(cpuid_source, dmi_source);
+        auto vmware_result = detectors::vmware(cpuid_source, smbios_source);
 
         if (vmware_result.valid()) {
             results.emplace_back(vmware_result);
@@ -61,7 +61,7 @@ namespace whereami {
             results.emplace_back(openvz_result);
         }
 
-        auto kvm_result = detectors::kvm(cpuid_source, dmi_source);
+        auto kvm_result = detectors::kvm(cpuid_source, smbios_source);
 
         if (kvm_result.valid()) {
             results.emplace_back(kvm_result);

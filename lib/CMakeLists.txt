@@ -30,6 +30,7 @@ set(PROJECT_SOURCES
     "src/detectors/vmware_detector.cc"
     "src/sources/cgroup_source.cc"
     "src/sources/cpuid_source.cc"
+    "src/sources/smbios_base.cc"
     "src/sources/dmi_source.cc")
 
 ## An object target is generated that can be used by both the library and test executable targets.

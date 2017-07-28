@@ -2,18 +2,17 @@
 
 #include <internal/detectors/result.hpp>
 #include <internal/sources/cpuid_source.hpp>
-#include <internal/sources/dmi_source.hpp>
-#include <string>
+#include <internal/sources/smbios_base.hpp>
 
 namespace whereami { namespace detectors {
 
     /**
      * VMware detector function
      * @param cpuid_source An instance of a CPUID data source
-     * @param dmi_source An instance of a DMI data source
+     * @param smbios_source An instance of an SMBIOS data source
      * @return The VMware detection result
      */
     result vmware(const sources::cpuid_base& cpuid_source,
-                  const sources::dmi_base& dmi_source);
+                  sources::smbios_base& smbios_source);
 
 }}  // namespace whereami::detectors

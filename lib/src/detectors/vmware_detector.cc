@@ -41,15 +41,15 @@ static string vmware_bios_address_to_version(int address)
 namespace whereami { namespace detectors {
 
     result vmware(const sources::cpuid_base& cpuid_source,
-                  const sources::dmi_base& dmi_source)
+                  sources::smbios_base& smbios_source)
     {
         result res {vm::vmware};
 
-        if (dmi_source.manufacturer() == "VMware, Inc." ||
+        if (smbios_source.manufacturer() == "VMware, Inc." ||
             cpuid_source.vendor() == "VMwareVMware") {
             res.validate();
 
-            auto bios_address = dmi_source.bios_address();
+            auto bios_address = smbios_source.bios_address();
             if (!bios_address.empty()) {
                 auto value = stoi(bios_address, nullptr, 16);
                 res.set("version", vmware_bios_address_to_version(value));
