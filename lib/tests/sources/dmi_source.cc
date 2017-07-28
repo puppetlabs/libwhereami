@@ -14,8 +14,8 @@ using namespace whereami::testing::dmi;
 SCENARIO("Using the DMI data source") {
     WHEN("DMI data is read from /sys/class/dmi/id/") {
         dmi_fixture dmi_source {
-            dmi_fixtures::DMIDECODE_NONE,
-            dmi_fixtures::SYS_VIRTUALBOX
+            dmi_fixture::DMIDECODE_NONE,
+            dmi_fixture::SYS_VIRTUALBOX
         };
         THEN("accessible string fields are populated via /sys/") {
             REQUIRE(dmi_source.bios_vendor() == "innotek GmbH");
@@ -33,8 +33,8 @@ SCENARIO("Using the DMI data source") {
     WHEN("DMI data is read from dmidecode") {
         AND_WHEN("output exists but there is no data available") {
             dmi_fixture dmi_source {
-                dmi_fixtures::DMIDECODE_NONE,
-                dmi_fixtures::SYS_NONE
+                dmi_fixture::DMIDECODE_NONE,
+                dmi_fixture::SYS_NONE
             };
             THEN("nothing is found") {
                 REQUIRE(dmi_source.bios_address().empty());
@@ -49,8 +49,8 @@ SCENARIO("Using the DMI data source") {
 
         AND_WHEN("output exists and data is available") {
             dmi_fixture dmi_source {
-                dmi_fixtures::DMIDECODE_VIRTUALBOX,
-                dmi_fixtures::SYS_NONE
+                dmi_fixture::DMIDECODE_VIRTUALBOX,
+                dmi_fixture::SYS_NONE
             };
             THEN("all fields are populated via dmidecode") {
                 REQUIRE(dmi_source.bios_address() == "0xE0000");
