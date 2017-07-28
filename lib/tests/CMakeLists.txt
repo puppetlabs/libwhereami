@@ -5,11 +5,13 @@ set(TEST_CASES
     "${PROJECT_NAME}.cc"
     "detectors/metadata.cc"
     "detectors/result.cc"
+    "detectors/docker_detector.cc"
     "detectors/virtualbox_detector.cc"
     "detectors/vmware_detector.cc"
     "fixtures.cc"
     "fixtures/cpuid_fixtures.cc"
     "fixtures/dmi_fixtures.cc"
+    "sources/cgroup_source.cc"
     "sources/cpuid_source.cc"
     "sources/dmi_source.cc")
 

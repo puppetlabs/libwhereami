@@ -2,7 +2,9 @@
 #include <whereami/version.h>
 #include <internal/vm.hpp>
 #include <internal/sources/dmi_source.hpp>
+#include <internal/sources/cgroup_source.hpp>
 #include <internal/sources/cpuid_source.hpp>
+#include <internal/detectors/docker_detector.hpp>
 #include <internal/detectors/virtualbox_detector.hpp>
 #include <internal/detectors/vmware_detector.hpp>
 #include <leatherman/logging/logging.hpp>
@@ -24,6 +26,7 @@ namespace whereami {
         vector<result> results;
         sources::dmi dmi_source;
         sources::cpuid cpuid_source;
+        sources::cgroup cgroup_source;
 
         auto virtualbox_result = detectors::virtualbox(cpuid_source, dmi_source);
 
@@ -35,6 +38,12 @@ namespace whereami {
 
         if (vmware_result.valid()) {
             results.emplace_back(vmware_result);
+        }
+
+        auto docker_result = detectors::docker(cgroup_source);
+
+        if (docker_result.valid()) {
+            results.emplace_back(docker_result);
         }
 
         return results;

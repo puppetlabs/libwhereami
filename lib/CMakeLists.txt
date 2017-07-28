@@ -21,8 +21,10 @@ set(PROJECT_SOURCES
     "src/${PROJECT_NAME}.cc"
     "src/detectors/metadata.cc"
     "src/detectors/result.cc"
+    "src/detectors/docker_detector.cc"
     "src/detectors/virtualbox_detector.cc"
     "src/detectors/vmware_detector.cc"
+    "src/sources/cgroup_source.cc"
     "src/sources/cpuid_source.cc"
     "src/sources/dmi_source.cc")
 
