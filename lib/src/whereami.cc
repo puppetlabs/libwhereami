@@ -6,6 +6,7 @@
 #include <internal/sources/cpuid_source.hpp>
 #include <internal/detectors/docker_detector.hpp>
 #include <internal/detectors/lxc_detector.hpp>
+#include <internal/detectors/openvz_detector.hpp>
 #include <internal/detectors/virtualbox_detector.hpp>
 #include <internal/detectors/vmware_detector.hpp>
 #include <leatherman/logging/logging.hpp>
@@ -53,6 +54,13 @@ namespace whereami {
             results.emplace_back(lxc_result);
         }
 
+        auto openvz_result = detectors::openvz();
+
+        if (openvz_result.valid()) {
+            results.emplace_back(openvz_result);
+        }
+
         return results;
     }
+
 }  // namespace whereami

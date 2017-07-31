@@ -19,4 +19,9 @@ namespace whereami { namespace detectors {
         data_.emplace(key, value);
     }
 
+    void metadata::set(string const& key, int value)
+    {
+        data_.emplace(key, value);
+    }
+
 }}  // namespace whereami::detectors
