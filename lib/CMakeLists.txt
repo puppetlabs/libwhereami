@@ -23,6 +23,7 @@ set(PROJECT_SOURCES
     "src/detectors/result.cc"
     "src/detectors/docker_detector.cc"
     "src/detectors/lxc_detector.cc"
+    "src/detectors/nspawn_detector.cc"
     "src/detectors/virtualbox_detector.cc"
     "src/detectors/vmware_detector.cc"
     "src/sources/cgroup_source.cc"
