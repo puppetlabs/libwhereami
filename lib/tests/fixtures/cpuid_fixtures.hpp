@@ -31,6 +31,7 @@ namespace whereami { namespace testing { namespace cpuid {
         static const sources::cpuid_registers HYPERVISOR_ABSENT{0, 0, 0, 0};
         static const sources::cpuid_registers HYPERVISOR_PRESENT{0, 0, 3736609283, 0};
         static const sources::cpuid_registers VENDOR_NONE{0, 0, 0, 0};
+        static const sources::cpuid_registers VENDOR_AUTHENTICAMD{13, 1752462657, 1145913699, 1769238117};
         static const sources::cpuid_registers VENDOR_KVMKVMKVM{0, 1263359563, 1447775574, 77};
         static const sources::cpuid_registers VENDOR_VBoxVBoxVBox{0, 2020557398, 2020557398, 2020557398};
         static const sources::cpuid_registers VENDOR_VMwareVMware{1073741840, 1635208534, 1297507698, 1701994871};
