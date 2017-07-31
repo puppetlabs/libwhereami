@@ -14,6 +14,6 @@ namespace whereami { namespace detectors {
      * @return The VMware detection result
      */
     result vmware(const sources::cpuid_base& cpuid_source,
-                  const sources::dmi_base& dmi_source);
+                  sources::dmi_base& dmi_source);
 
 }}  // namespace whereami::detectors

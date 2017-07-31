@@ -10,7 +10,7 @@ using namespace leatherman::util;
 namespace whereami { namespace detectors {
 
     result virtualbox(const sources::cpuid_base& cpuid_source,
-                      const sources::dmi_base& dmi_source) {
+                      sources::dmi_base& dmi_source) {
         result res {vm::virtualbox};
 
         if (cpuid_source.vendor() == "VBoxVBoxVBox" ||
@@ -20,7 +20,7 @@ namespace whereami { namespace detectors {
             // Look for VirtualBox version and revision in DMI OEM strings
             auto oem_strings = dmi_source.oem_strings();
 
-            for (auto const& oem_string : dmi_source.oem_strings()) {
+            for (auto const& oem_string : oem_strings) {
                 if (boost::istarts_with(oem_string, "vboxVer_")) {
                     auto version = oem_string.substr(8, string::npos);
                     res.set("version", version);

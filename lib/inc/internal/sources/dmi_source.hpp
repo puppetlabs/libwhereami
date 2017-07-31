@@ -54,75 +54,72 @@ namespace whereami { namespace sources {
     class dmi_base
     {
     public:
-        dmi_base() {}
-        virtual ~dmi_base() {}
         /**
          * Retrieve the BIOS address
          * @return The BIOS address
          */
-        std::string bios_address() const;
+        std::string bios_address();
         /**
          * Retrieve the BIOS vendor
          * @return The BIOS vendor's name
          */
-        std::string bios_vendor() const;
+        std::string bios_vendor();
         /**
          * Retrieve the board manufacturer
          * @return The board manufacturer's name
          */
-        std::string board_manufacturer() const;
+        std::string board_manufacturer();
         /**
          * Retrieve the board product name
          * @return The board product name
          */
-        std::string board_product_name() const;
+        std::string board_product_name();
         /**
          * Retrieve the system manufacturer
          * @return The system manufacturer
          */
-        std::string manufacturer() const;
+        std::string manufacturer();
         /**
          * Retrieve the product name
          * @return The product name
          */
-        std::string product_name() const;
+        std::string product_name();
         /**
          * Retrieve any OEM strings
          * @return A vector of OEM strings
          */
-        std::vector<std::string> oem_strings() const;
+        std::vector<std::string> oem_strings();
+
     protected:
+        /**
+         * /sys path to user-accessible DMI files on *nix systems
+         */
+        constexpr static char const* SYS_PATH {"/sys/class/dmi/id/"};
         /**
          * Collected data for this machine based on DMI information
          */
         std::unique_ptr<dmi_data> data_;
-    };
-
-    /**
-     * Default DMI data source
-     */
-    class dmi : public dmi_base
-    {
-     public:
-        dmi();
-        virtual ~dmi() {}
-     protected:
         /**
-         * /sys path to user-accessible DMI files on *nix systems
+         * Collect data if it hasn't been collected yet, and return a pointer to the DMI data object
+         * @return A pointer to the collected DMI data
          */
-        constexpr static char const* SYS_PATH = "/sys/class/dmi/id/";
-        /**
-         * Attempt to collect virtualization data using DMI
-         */
-        virtual void collect_data();
+        virtual dmi_data const* data();
         /**
          * Attempt to collect data from files in /sys/class/dmi/id/
+         * @return Whether data was collected
          */
-        virtual void collect_data_from_sys();
+        virtual bool collect_data_from_sys();
         /**
          * Attempt to collect data from dmidecode executable (requires root)
+         * @return Whether data was collected
          */
-        virtual void collect_data_from_dmidecode();
+        virtual bool collect_data_from_dmidecode();
+        /**
+         * Examine a line of dmidecode output for useful information
+         * @param line The contents of the line
+         * @param dmi_type Initial dmi_type value, e.g. -1
+         */
+        void parse_dmidecode_line(std::string& line, int& dmi_type);
         /**
          * Construct a full pathname for files in /sys/class/dmi/id/
          * @param filename The name of the file expected to exist in /sys/class/dmi/id/, e.g. "bios_vendor"
@@ -130,17 +127,16 @@ namespace whereami { namespace sources {
          */
         virtual std::string sys_path(std::string const& filename = "") const;
         /**
-         * Read a single DMI file
+         * Read a single DMI file from SYS_PATH
          * @param path The path to the file
          * @return The contents of the file
          */
         std::string read_file(std::string const& path);
-        /**
-         * Examine a line of dmidecode output for useful information
-         * @param line The contents of the line
-         * @param dmi_type Initial dmi_type value, e.g. -1
-         */
-        void parse_dmidecode_line(std::string& line, int& dmi_type);
     };
+
+    /**
+     * Default DMI source; Requires nothing beyond the base.
+     */
+    using dmi = dmi_base;
 
 }}  // namespace whereami::sources

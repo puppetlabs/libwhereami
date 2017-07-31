@@ -1,115 +1,126 @@
 #include <internal/sources/dmi_source.hpp>
-#include <leatherman/util/regex.hpp>
-#include <leatherman/logging/logging.hpp>
-#include <leatherman/file_util/file.hpp>
 #include <leatherman/execution/execution.hpp>
+#include <leatherman/file_util/file.hpp>
+#include <leatherman/logging/logging.hpp>
+#include <leatherman/util/regex.hpp>
+#include <leatherman/util/strings.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/algorithm/string.hpp>
 #include <unordered_map>
 
-using namespace std;
 using namespace boost::filesystem;
+using namespace leatherman::util;
+using namespace std;
+
 namespace bs = boost::system;
 namespace lth_file = leatherman::file_util;
-using namespace leatherman::util;
+namespace lth_exe = leatherman::execution;
 
 namespace whereami { namespace sources {
 
-    std::string dmi_base::bios_address() const
+    std::string dmi_base::bios_address()
     {
-        return data_ ? data_->bios_address : "";
+        return data()->bios_address;
     }
 
-    std::string dmi_base::bios_vendor() const
+    std::string dmi_base::bios_vendor()
     {
-        return data_ ? data_->bios_vendor : "";
+        return data()->bios_vendor;
     }
 
-    std::string dmi_base::board_manufacturer() const
+    std::string dmi_base::board_manufacturer()
     {
-        return data_ ? data_->board_manufacturer : "";
+        return data()->board_manufacturer;
     }
 
-    std::string dmi_base::board_product_name() const
+    std::string dmi_base::board_product_name()
     {
-        return data_ ? data_->board_product_name : "";
+        return data()->board_product_name;
     }
 
-    std::string dmi_base::product_name() const
+    std::string dmi_base::product_name()
     {
-        return data_ ? data_->product_name : "";
+        return data()->product_name;
     }
 
-    std::string dmi_base::manufacturer() const
+    std::string dmi_base::manufacturer()
     {
-        return data_ ? data_->manufacturer : "";
+        return data()->manufacturer;
     }
 
-    std::vector<std::string> dmi_base::oem_strings() const
+    std::vector<std::string> dmi_base::oem_strings()
     {
-        if (data_) {
-            return data_->oem_strings;
-        }
-        return {};
+        return data()->oem_strings;
     }
 
-    dmi::dmi()
+    dmi_data const* dmi_base::data()
     {
-        collect_data();
-    }
-
-    void dmi::collect_data()
-    {
-        // Attempt to use dmidecode first, because it yields extra metadata (requires root)
-        collect_data_from_dmidecode();
         if (!data_) {
-            // Otherwise, collect most of dmidecode's data from user-accessible files in /sys/
-            collect_data_from_sys();
+            // Attempt to use dmidecode first, because it yields extra metadata (requires root)
+            if (!collect_data_from_dmidecode()) {
+                // Otherwise, collect most of dmidecode's data from user-accessible files in /sys/
+                if (!collect_data_from_sys()) {
+                    // If both methods failed, the result should be empty
+                    data_.reset(new dmi_data);
+                }
+            }
         }
+        return data_.get();
     }
 
-    string dmi::sys_path(string const& filename) const
+    string dmi_base::sys_path(string const& filename) const
     {
         return SYS_PATH + filename;
     }
 
-    void dmi::collect_data_from_sys()
+    bool dmi_base::collect_data_from_sys()
     {
-        // Check that /sys/class/dmi exists
-        bs::error_code ec;
-        if (is_directory(sys_path(), ec)) {
-            if (!data_) {
-                data_.reset(new dmi_data);
-            }
-            data_->bios_vendor = read_file(sys_path("bios_vendor"));
-            data_->board_manufacturer = read_file(sys_path("board_vendor"));
-            data_->board_product_name = read_file(sys_path("board_name"));
-            data_->manufacturer = read_file(sys_path("sys_vendor"));
-            data_->product_name = read_file(sys_path("product_name"));
-        } else {
-            LOG_DEBUG(sys_path() + " cannot be accessed.");
+        if (!is_directory(sys_path())) {
+            LOG_DEBUG(sys_path() + " not found.");
+            return false;
         }
+
+        if (!data_) {
+            data_.reset(new dmi_data);
+        }
+
+        data_->bios_vendor = read_file(sys_path("bios_vendor"));
+        data_->board_manufacturer = read_file(sys_path("board_vendor"));
+        data_->board_product_name = read_file(sys_path("board_name"));
+        data_->manufacturer = read_file(sys_path("sys_vendor"));
+        data_->product_name = read_file(sys_path("product_name"));
+
+        return true;
     }
 
-    void dmi::collect_data_from_dmidecode()
+    bool dmi_base::collect_data_from_dmidecode()
     {
         LOG_DEBUG("Using dmidecode to query DMI information.");
 
-        string dmidecode = leatherman::execution::which("dmidecode");
+        string exec_path = lth_exe::which("dmidecode");
 
-        if (dmidecode.empty()) {
+        if (exec_path.empty()) {
             LOG_DEBUG("dmidecode executable not found");
-        } else {
-            int dmi_type {-1};
-            leatherman::execution::each_line(dmidecode, [&](string& line) {
-                parse_dmidecode_line(line, dmi_type);
-                return true;
-            });
+            return false;
         }
+
+        auto res = lth_exe::execute(exec_path);
+
+        if (res.exit_code != 0) {
+            LOG_DEBUG("Error while running dmidecode ({1})", res.exit_code);
+            return false;
+        }
+
+        int dmi_type {-1};
+        each_line(res.output, [&](string& line) {
+            parse_dmidecode_line(line, dmi_type);
+            return true;
+        });
+
+        return data_.get() == nullptr;
     }
 
-    // Read a single file in the DMI directory
-    string dmi::read_file(string const& path)
+    string dmi_base::read_file(string const& path)
     {
         bs::error_code ec;
         if (!is_regular_file(path, ec)) {
@@ -135,11 +146,11 @@ namespace whereami { namespace sources {
         return value;
     }
 
-    void dmi::parse_dmidecode_line(string& line, int& dmi_type)
+    void dmi_base::parse_dmidecode_line(string& line, int& dmi_type)
     {
         static const boost::regex dmi_section_pattern {"^Handle 0x.{4}, DMI type (\\d{1,3})"};
 
-        // Stores the relevant DMI sections
+        // Stores the relevant DMI section titles
         static const unordered_map<int, vector<string>> sections {
             { 0, {  // BIOS
                 "vendor:",
@@ -199,8 +210,7 @@ namespace whereami { namespace sources {
             case 0: {  // BIOS information
                 if (index == 0) {
                     data_->bios_vendor = move(value);
-                }
-                if (index == 1) {
+                } else if (index == 1) {
                     data_->bios_address = move(value);
                 }
                 break;

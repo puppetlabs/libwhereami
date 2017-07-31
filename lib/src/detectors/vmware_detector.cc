@@ -41,7 +41,7 @@ static string vmware_bios_address_to_version(int address)
 namespace whereami { namespace detectors {
 
     result vmware(const sources::cpuid_base& cpuid_source,
-                  const sources::dmi_base& dmi_source)
+                  sources::dmi_base& dmi_source)
     {
         result res {vm::vmware};
 

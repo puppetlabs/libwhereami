@@ -13,6 +13,6 @@ namespace whereami { namespace detectors {
      * @return Whether this machine is a VirtualBox guest
      */
     result virtualbox(const sources::cpuid_base& cpuid_source,
-                      const sources::dmi_base& dmi_source);
+                      sources::dmi_base& dmi_source);
 
 }}  // namespace whereami::detectors
