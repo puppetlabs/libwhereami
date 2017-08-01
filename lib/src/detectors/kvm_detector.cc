@@ -19,6 +19,10 @@ namespace whereami { namespace detectors {
             && dmi_source.product_name() != "VirtualBox"
             && !re_search(dmi_source.product_name(), parallels_pattern)) {
             res.validate();
+
+            if (dmi_source.bios_vendor() == "Google") {
+                res.set("google", true);
+            }
         }
 
         return res;
