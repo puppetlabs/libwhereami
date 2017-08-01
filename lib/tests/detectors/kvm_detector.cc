@@ -115,4 +115,27 @@ SCENARIO("Using the KVM detector") {
             REQUIRE(res.get<bool>("google"));
         }
     }
+
+    WHEN("Running on OpenStack") {
+        cpuid_fixture_values cpuid_source({
+            {VENDOR_LEAF,        register_fixtures::VENDOR_KVMKVMKVM},
+            {HYPERVISOR_PRESENT, register_fixtures::HYPERVISOR_PRESENT},
+        });
+        dmi_fixture_values dmi_source({
+            "0xE8000",
+            "SeaBIOS",
+            "",
+            "",
+            "Fedora Project",
+            "OpenStack Nova",
+            {},
+        });
+        auto res = kvm(cpuid_source, dmi_source);
+        THEN("KVM is detected") {
+            REQUIRE(res.valid());
+        }
+        THEN("OpenStack is detected") {
+            REQUIRE(res.get<bool>("openstack"));
+        }
+    }
 }
