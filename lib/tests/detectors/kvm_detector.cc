@@ -92,4 +92,27 @@ SCENARIO("Using the KVM detector") {
             REQUIRE_FALSE(res.valid());
         }
     }
+
+    WHEN("Running on Google Compute Engine") {
+        cpuid_fixture_values cpuid_source({
+            {VENDOR_LEAF,        register_fixtures::VENDOR_KVMKVMKVM},
+            {HYPERVISOR_PRESENT, register_fixtures::HYPERVISOR_PRESENT},
+        });
+        dmi_fixture_values dmi_source({
+            "0xe8000",
+            "Google",
+            "Google",
+            "Google Compute Engine",
+            "Google",
+            "Google Compute Engine",
+            {},
+        });
+        auto res = kvm(cpuid_source, dmi_source);
+        THEN("KVM is detected") {
+            REQUIRE(res.valid());
+        }
+        THEN("Google Compute Engine is detected") {
+            REQUIRE(res.get<bool>("google"));
+        }
+    }
 }
