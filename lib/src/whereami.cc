@@ -5,6 +5,7 @@
 #include <internal/sources/cgroup_source.hpp>
 #include <internal/sources/cpuid_source.hpp>
 #include <internal/detectors/docker_detector.hpp>
+#include <internal/detectors/kvm_detector.hpp>
 #include <internal/detectors/lxc_detector.hpp>
 #include <internal/detectors/openvz_detector.hpp>
 #include <internal/detectors/virtualbox_detector.hpp>
@@ -58,6 +59,12 @@ namespace whereami {
 
         if (openvz_result.valid()) {
             results.emplace_back(openvz_result);
+        }
+
+        auto kvm_result = detectors::kvm(cpuid_source, dmi_source);
+
+        if (kvm_result.valid()) {
+            results.emplace_back(kvm_result);
         }
 
         return results;
