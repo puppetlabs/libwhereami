@@ -6,23 +6,17 @@ using namespace std;
 
 namespace whereami { namespace testing { namespace cpuid {
 
-    cpuid_registers cpuid_fixture_empty::read_cpuid(unsigned int leaf) const
+    cpuid_registers cpuid_register_fixtures::lookup(unsigned int leaf, unsigned int subleaf) const
     {
-        return {};
-    }
-
-    cpuid_fixture_values::cpuid_fixture_values(std::unordered_map<unsigned int, sources::cpuid_registers> values)
-        : register_values_(std::move(values))
-    {
-    }
-
-    cpuid_registers cpuid_fixture_values::read_cpuid(unsigned int leaf) const
-    {
-        auto it = register_values_.find(leaf);
-        if (it == register_values_.end()) {
+        auto it_leaf = register_values_.find(leaf);
+        if (it_leaf == register_values_.end()) {
             return {};
         }
-        return it->second;
+        auto it_subleaf = it_leaf->second.find(subleaf);
+        if (it_subleaf == it_leaf->second.end()) {
+            return {};
+        }
+        return it_subleaf->second;
     }
 
 }}}  // namespace whereami::testing::cpuid

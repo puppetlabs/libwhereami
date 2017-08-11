@@ -11,10 +11,12 @@ using namespace whereami::testing::dmi;
 
 SCENARIO("Using the VMware detector") {
     WHEN("running as root on a Linux VMware guest") {
-        cpuid_fixture_values cpuid_source({
-            {VENDOR_LEAF,        register_fixtures::VENDOR_VMwareVMware},
-            {HYPERVISOR_PRESENT, register_fixtures::HYPERVISOR_PRESENT},
-        });
+        leaf_register_map values {
+            {VENDOR_LEAF, {
+                {0, register_fixtures::VENDOR_VMwareVMware}}},
+            {HYPERVISOR_PRESENT_LEAF, {
+                {0, register_fixtures::HYPERVISOR_PRESENT}}}};
+        cpuid_fixture cpuid_source {values};
         dmi_fixture_values dmi_source({
             "0xea580",
             "Phoenix Technologies LTD",
@@ -37,10 +39,12 @@ SCENARIO("Using the VMware detector") {
     }
 
     WHEN("running as a normal user on a Linux VMware guest") {
-        cpuid_fixture_values cpuid_source({
-            {VENDOR_LEAF,        register_fixtures::VENDOR_VMwareVMware},
-            {HYPERVISOR_PRESENT, register_fixtures::HYPERVISOR_PRESENT},
-        });
+        leaf_register_map values {
+            {VENDOR_LEAF, {
+                {0, register_fixtures::VENDOR_VMwareVMware}}},
+            {HYPERVISOR_PRESENT_LEAF, {
+                {0, register_fixtures::HYPERVISOR_PRESENT}}}};
+        cpuid_fixture cpuid_source {values};
         dmi_fixture_values dmi_source({
             "",
             "Phoenix Technologies LTD",
@@ -60,10 +64,12 @@ SCENARIO("Using the VMware detector") {
     }
 
     WHEN("running in a Windows VMware guest") {
-        cpuid_fixture_values cpuid_source({
-            {VENDOR_LEAF,        register_fixtures::VENDOR_VMwareVMware},
-            {HYPERVISOR_PRESENT, register_fixtures::HYPERVISOR_PRESENT},
-        });
+        leaf_register_map values {
+            {VENDOR_LEAF, {
+                {0, register_fixtures::VENDOR_VMwareVMware}}},
+            {HYPERVISOR_PRESENT_LEAF, {
+                {0, register_fixtures::HYPERVISOR_PRESENT}}}};
+        cpuid_fixture cpuid_source {values};
         dmi_fixture_empty dmi_source;
         THEN("it should return true") {
             REQUIRE(vmware(cpuid_source, dmi_source).valid());
@@ -71,10 +77,12 @@ SCENARIO("Using the VMware detector") {
     }
 
     WHEN("running outside of VMware") {
-        cpuid_fixture_values cpuid_source({
-            {VENDOR_LEAF, register_fixtures::VENDOR_KVMKVMKVM},
-            {HYPERVISOR_PRESENT, register_fixtures::HYPERVISOR_PRESENT},
-        });
+        leaf_register_map values {
+            {VENDOR_LEAF, {
+                {0, register_fixtures::VENDOR_KVMKVMKVM}}},
+            {HYPERVISOR_PRESENT_LEAF, {
+                {0, register_fixtures::HYPERVISOR_PRESENT}}}};
+        cpuid_fixture cpuid_source {values};
         dmi_fixture_values dmi_source({
             "Other",
             "Other",

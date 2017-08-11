@@ -12,10 +12,12 @@ using namespace whereami::testing::cpuid;
 
 SCENARIO("Using the VirtualBox detector") {
     WHEN("running on a Linux VirtualBox guest with root") {
-        cpuid_fixture_values cpuid_source({
-            {VENDOR_LEAF,        register_fixtures::VENDOR_KVMKVMKVM},
-            {HYPERVISOR_PRESENT, register_fixtures::HYPERVISOR_PRESENT},
-        });
+        leaf_register_map values {
+            {VENDOR_LEAF, {
+                {0, register_fixtures::VENDOR_KVMKVMKVM}}},
+            {HYPERVISOR_PRESENT_LEAF, {
+                {0, register_fixtures::HYPERVISOR_PRESENT}}}};
+        cpuid_fixture cpuid_source {values};
         dmi_fixture_values dmi_source({
             "0x30000",
             "VirtualBox",
@@ -38,10 +40,12 @@ SCENARIO("Using the VirtualBox detector") {
     }
 
     WHEN("running on a Linux VirtualBox guest without root") {
-        cpuid_fixture_values cpuid_source({
-            {VENDOR_LEAF,        register_fixtures::VENDOR_KVMKVMKVM},
-            {HYPERVISOR_PRESENT, register_fixtures::HYPERVISOR_PRESENT},
-        });
+        leaf_register_map values {
+            {VENDOR_LEAF, {
+                {0, register_fixtures::VENDOR_KVMKVMKVM}}},
+            {HYPERVISOR_PRESENT_LEAF, {
+                {0, register_fixtures::HYPERVISOR_PRESENT}}}};
+        cpuid_fixture cpuid_source {values};
         dmi_fixture_values dmi_source({
             "",
             "VirtualBox",
@@ -61,10 +65,12 @@ SCENARIO("Using the VirtualBox detector") {
     }
 
     WHEN("running on a Windows VirtualBox guest") {
-        cpuid_fixture_values cpuid_source({
-            {VENDOR_LEAF,        register_fixtures::VENDOR_VBoxVBoxVBox},
-            {HYPERVISOR_PRESENT, register_fixtures::HYPERVISOR_PRESENT}
-        });
+        leaf_register_map values {
+            {VENDOR_LEAF, {
+                {0, register_fixtures::VENDOR_VBoxVBoxVBox}}},
+            {HYPERVISOR_PRESENT_LEAF, {
+                {0, register_fixtures::HYPERVISOR_PRESENT}}}};
+        cpuid_fixture cpuid_source {values};
         dmi_fixture_empty dmi_source;
         THEN("the result should be valid") {
             auto res = virtualbox(cpuid_source, dmi_source);
@@ -73,10 +79,12 @@ SCENARIO("Using the VirtualBox detector") {
     }
 
     WHEN("running outside of VirtualBox") {
-        cpuid_fixture_values cpuid_source({
-            {VENDOR_LEAF,        register_fixtures::VENDOR_KVMKVMKVM},
-            {HYPERVISOR_PRESENT, register_fixtures::HYPERVISOR_PRESENT}
-        });
+        leaf_register_map values {
+            {VENDOR_LEAF, {
+                {0, register_fixtures::VENDOR_KVMKVMKVM}}},
+            {HYPERVISOR_PRESENT_LEAF, {
+                {0, register_fixtures::HYPERVISOR_PRESENT}}}};
+        cpuid_fixture cpuid_source {values};
         dmi_fixture_values dmi_source({
             "Other",
             "Other",
