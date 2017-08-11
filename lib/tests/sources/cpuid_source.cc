@@ -66,3 +66,28 @@ SCENARIO("Specifying a subleaf value") {
         }
     }
 }
+
+SCENARIO("Searching for a vendor ID at an offset leaf") {
+    WHEN("the desired ID sits at a higher leaf than the base") {
+        leaf_register_map values {
+            {VENDOR_LEAF, {
+                {0, register_fixtures::XEN_OFFSET}}},
+            {VENDOR_LEAF + 0x100, {
+                {0, register_fixtures::XEN_INVALID}}},
+            {VENDOR_LEAF + 0x200, {
+                {0, register_fixtures::VENDOR_XenVMMXenVMM}}}};
+        cpuid_fixture cpuid_source {values};
+        WHEN("the ID should be found") {
+            REQUIRE(cpuid_source.has_vendor("XenVMMXenVMM"));
+        }
+    }
+    WHEN("a higher-offset vendor ID exists but it does not match the desired ID") {
+        leaf_register_map values {
+            {VENDOR_LEAF, {
+                {0, register_fixtures::XEN_OFFSET}}}};
+        cpuid_fixture cpuid_source {values};
+        THEN("the ID should not be found") {
+            REQUIRE_FALSE(cpuid_source.has_vendor("XenVMMXenVMM"));
+        }
+    }
+}

@@ -46,6 +46,14 @@ namespace whereami { namespace sources {
          */
         bool has_hypervisor() const;
         /**
+         * Xen with HVM sometimes stores its vendor ID at a higher offset from the usual vendor leaf.
+         * Search for the given vendor id at offsets from the base leaf (in increments of 0x100) until the desired
+         * vendor string is found or the maximum leaf (which is the value returned by the CPUID instruction) is reached.
+         * @param vendor_search The vendor ID to search for
+         * @return Whether the vendor string was found at any offset
+         */
+        bool has_vendor(std::string const& vendor_search) const;
+        /**
          * Retrieve the vendor ID (Calls CPUID with eax = VENDOR_LEAF)
          * @param subleaf An optional subleaf value to pass through to read_cpuid
          * @return the vendor ID string
@@ -60,6 +68,14 @@ namespace whereami { namespace sources {
          * When CPUID is passed a 1, bit 31 of ecx reports whether the machine is running on a hypervisor
          */
         static const unsigned int HYPERVISOR_PRESENT = 1;
+
+    protected:
+        /**
+         * Interpret the values of ebx, ecx, and edx as a vendor ID string after a call to CPUID with the vendor leaf.
+         * @param regs Regsiter results from read_cpuid
+         * @return A vendor ID string
+         */
+        std::string interpret_vendor_registers(cpuid_registers const& regs) const;
     };
 
     /**

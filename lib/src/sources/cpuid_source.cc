@@ -1,3 +1,4 @@
+#include <iostream>
 #include <internal/sources/cpuid_source.hpp>
 
 using namespace whereami::sources;
@@ -23,16 +24,30 @@ namespace whereami { namespace sources {
         return static_cast<bool>(regs.ecx & (1 << 31));
     }
 
-    string cpuid_base::vendor() const
+    string cpuid_base::interpret_vendor_registers(cpuid_registers const& regs) const
+    {
+        unsigned int result[4] = {regs.ebx, regs.ecx, regs.edx, 0};
+        return string {reinterpret_cast<char*>(result)};
+    }
+
+    string cpuid_base::vendor(unsigned int subleaf) const
+    {
+        auto regs = read_cpuid(VENDOR_LEAF, subleaf);
+        return interpret_vendor_registers(regs);
+    }
+
+    bool cpuid_base::has_vendor(string const& vendor_search) const
     {
         auto regs = read_cpuid(VENDOR_LEAF);
-        // CPUID returns the maximum useful leaf value in eax by default
+        // CPUID returns the maximum queryable leaf value in eax
         unsigned int max_entries = regs.eax;
 
+        // These bounds are the minimum and maximum sane results for Xen offsets
         if (max_entries < 4 || max_entries >= 0x10000) {
             return (interpret_vendor_registers(regs) == vendor_search);
         }
 
+        // Look through valid offsets until the desired vendor is found or we run out
         for (unsigned int leaf = VENDOR_LEAF + 0x100;
              leaf <= VENDOR_LEAF + max_entries;
              leaf += 0x100) {

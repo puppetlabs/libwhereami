@@ -38,10 +38,6 @@ namespace whereami { namespace testing { namespace cpuid {
         cpuid_register_fixtures register_values_;
     };
 
-    protected:
-        std::unordered_map<unsigned int, sources::cpuid_registers> register_values_;
-    };
-
     /**
      * Expected raw register values
      */
@@ -51,10 +47,11 @@ namespace whereami { namespace testing { namespace cpuid {
         static const sources::cpuid_registers VENDOR_NONE {0, 0, 0, 0};
         static const sources::cpuid_registers VENDOR_AuthenticAMD {13, 1752462657, 1769238117, 1145913699};
         static const sources::cpuid_registers VENDOR_KVMKVMKVM {0, 1263359563, 1447775574, 77};
+        static const sources::cpuid_registers VENDOR_Microsoft_Hv {1073741830, 1919117645, 1718580079, 1984438388};
         static const sources::cpuid_registers VENDOR_VBoxVBoxVBox {0, 2020557398, 2020557398, 2020557398};
         static const sources::cpuid_registers VENDOR_VMwareVMware {1073741840, 1635208534, 1297507698, 1701994871};
         static const sources::cpuid_registers VENDOR_XenVMMXenVMM {1073741828, 1450075480, 1700285773, 1296914030};
-        static const sources::cpuid_registers VERSION_XEN_48 {262152, 0, 0, 0};
+        static const sources::cpuid_registers XEN_OFFSET {65534, 832, 832, 0};
         static const sources::cpuid_registers XEN_INVALID {7, 832, 832, 0};
     }
 
@@ -63,6 +60,5 @@ namespace whereami { namespace testing { namespace cpuid {
      */
     static const unsigned int VENDOR_LEAF {sources::cpuid_base::VENDOR_LEAF};
     static const unsigned int HYPERVISOR_PRESENT_LEAF {sources::cpuid_base::HYPERVISOR_PRESENT};
-    static const unsigned int XEN_VERSION_LEAF {sources::cpuid_xen::VERSION_LEAF};
 
 }}};  // namespace whereami::testing::cpuid

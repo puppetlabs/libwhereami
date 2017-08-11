@@ -10,14 +10,21 @@ using namespace whereami::testing::dmi;
 using namespace whereami::testing::cpuid;
 
 SCENARIO("Using the Hyper-V detector") {
-    cpuid_fixture_values cpuid_empty({
-        {VENDOR_LEAF,        register_fixtures::VENDOR_NONE},
-        {HYPERVISOR_PRESENT, register_fixtures::HYPERVISOR_PRESENT}
-    });
-    cpuid_fixture_values cpuid_source({
-        {VENDOR_LEAF,        register_fixtures::VENDOR_Microsoft_Hv},
-        {HYPERVISOR_PRESENT, register_fixtures::HYPERVISOR_PRESENT},
-    });
+    leaf_register_map empty_values {
+        {VENDOR_LEAF, {
+            {0, register_fixtures::VENDOR_NONE}}},
+        {HYPERVISOR_PRESENT_LEAF, {
+            {0, register_fixtures::HYPERVISOR_PRESENT}}}};
+
+    cpuid_fixture cpuid_empty(empty_values);
+
+    leaf_register_map hyperv_values {
+        {VENDOR_LEAF, {
+            {0, register_fixtures::VENDOR_Microsoft_Hv}}},
+        {HYPERVISOR_PRESENT_LEAF, {
+            {0, register_fixtures::HYPERVISOR_PRESENT}}}};
+
+    cpuid_fixture cpuid_source(hyperv_values);
 
     dmi_fixture_values dmi_source({
         "",

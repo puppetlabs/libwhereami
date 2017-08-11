@@ -29,6 +29,7 @@ set(PROJECT_SOURCES
     "src/detectors/nspawn_detector.cc"
     "src/detectors/virtualbox_detector.cc"
     "src/detectors/vmware_detector.cc"
+    "src/detectors/xen_detector.cc"
     "src/sources/cgroup_source.cc"
     "src/sources/cpuid_source.cc"
     "src/sources/dmi_source.cc"

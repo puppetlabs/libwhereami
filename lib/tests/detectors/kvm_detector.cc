@@ -127,10 +127,12 @@ SCENARIO("Using the KVM detector") {
     }
 
     WHEN("Running on OpenStack") {
-        cpuid_fixture_values cpuid_source({
-            {VENDOR_LEAF,        register_fixtures::VENDOR_KVMKVMKVM},
-            {HYPERVISOR_PRESENT, register_fixtures::HYPERVISOR_PRESENT},
-        });
+        leaf_register_map values {
+            {VENDOR_LEAF, {
+                  {0, register_fixtures::VENDOR_KVMKVMKVM}}},
+            {HYPERVISOR_PRESENT_LEAF, {
+                  {0, register_fixtures::HYPERVISOR_PRESENT}}}};
+        cpuid_fixture cpuid_source {values};
         dmi_fixture_values dmi_source({
             "0xE8000",
             "SeaBIOS",
