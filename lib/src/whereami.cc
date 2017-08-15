@@ -4,6 +4,7 @@
 #include <internal/sources/cgroup_source.hpp>
 #include <internal/sources/cpuid_source.hpp>
 #include <internal/detectors/docker_detector.hpp>
+#include <internal/detectors/hyperv_detector.hpp>
 #include <internal/detectors/kvm_detector.hpp>
 #include <internal/detectors/lxc_detector.hpp>
 #include <internal/detectors/openvz_detector.hpp>
@@ -76,6 +77,12 @@ namespace whereami {
 
         if (kvm_result.valid()) {
             results.emplace_back(kvm_result);
+        }
+
+        auto hyperv_result = detectors::hyperv(cpuid_source, smbios_source);
+
+        if (hyperv_result.valid()) {
+            results.emplace_back(hyperv_result);
         }
 
         return results;
