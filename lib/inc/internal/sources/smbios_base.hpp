@@ -18,32 +18,32 @@ namespace whereami { namespace sources {
         std::string bios_address;
         /**
          * The name of the BIOS vendor
-         * via /sys/class/dmi/id/bios_vendor or dmidecode section 0 vendor
+         * via /sys/class/dmi/id/bios_vendor, dmidecode section 0 vendor, or WMI's bios manufacturer
          */
         std::string bios_vendor;
         /**
          * The board manufacturer
-         * via /sys/class/dmi/id/board_vendor or dmidecode section 2 manufacturer
+         * via /sys/class/dmi/id/board_vendor, dmidecode section 2 manufacturer, or WMI's base board manufacturer
          */
         std::string board_manufacturer;
         /**
          * The board product name
-         * via /sys/class/dmi/id/board_name or dmidecode section 2 product name
+         * via /sys/class/dmi/id/board_name, dmidecode section 2 product name, or WMI's base board product
          */
         std::string board_product_name;
         /**
          * The system manufacturer (via /sys/class/dmi/id/sys_vendor)
-         * via /sys/class/dmi/id/sys_vendor or dmidecode section 1 manufacturer
+         * via /sys/class/dmi/id/sys_vendor, dmidecode section 1 manufacturer, or WMI's computer system manufacturer
          */
         std::string manufacturer;
         /**
          * The product name
-         * via /sys/class/dmi/id/product_name or dmidecode section 1 product name
+         * via /sys/class/dmi/id/product_name, dmidecode section 1 product name, or WMI's computer system product name
          */
         std::string product_name;
         /**
          * OEM strings
-         * Only available via dmidecode section 11 (requires root)
+         * via dmidecode section 11 (requires root), or WMI's computer system OEM string array
          */
         std::vector<std::string> oem_strings;
     };

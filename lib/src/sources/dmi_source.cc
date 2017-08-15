@@ -209,4 +209,4 @@ namespace whereami { namespace sources {
         }
     }
 
-}};  // namespace whereami::sources
+}}  // namespace whereami::sources

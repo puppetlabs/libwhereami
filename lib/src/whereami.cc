@@ -1,7 +1,6 @@
 #include <whereami/whereami.hpp>
 #include <whereami/version.h>
 #include <internal/vm.hpp>
-#include <internal/sources/dmi_source.hpp>
 #include <internal/sources/cgroup_source.hpp>
 #include <internal/sources/cpuid_source.hpp>
 #include <internal/detectors/docker_detector.hpp>
@@ -11,6 +10,12 @@
 #include <internal/detectors/virtualbox_detector.hpp>
 #include <internal/detectors/vmware_detector.hpp>
 #include <leatherman/logging/logging.hpp>
+
+#if defined(_WIN32)
+#include <internal/sources/wmi_source.hpp>
+#else
+#include <internal/sources/dmi_source.hpp>
+#endif
 
 using namespace std;
 using namespace whereami;
@@ -27,7 +32,13 @@ namespace whereami {
     vector<result> hypervisors()
     {
         vector<result> results;
+
+#if defined(_WIN32)
+        sources::wmi smbios_source;
+#else
         sources::dmi smbios_source;
+#endif
+
         sources::cpuid cpuid_source;
         sources::cgroup cgroup_source;
 

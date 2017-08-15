@@ -30,8 +30,12 @@ set(PROJECT_SOURCES
     "src/detectors/vmware_detector.cc"
     "src/sources/cgroup_source.cc"
     "src/sources/cpuid_source.cc"
-    "src/sources/smbios_base.cc"
-    "src/sources/dmi_source.cc")
+    "src/sources/dmi_source.cc"
+    "src/sources/smbios_base.cc")
+
+if(WIN32)
+    set(PROJECT_SOURCES ${PROJECT_SOURCES} "src/sources/wmi_source.cc")
+endif()
 
 ## An object target is generated that can be used by both the library and test executable targets.
 ## Without the intermediate target, unexported symbols can't be tested.
