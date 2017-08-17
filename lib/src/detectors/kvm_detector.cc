@@ -6,6 +6,7 @@ using namespace leatherman::util;
 
 namespace whereami { namespace detectors {
 
+    static const boost::regex openstack_pattern {"^OpenStack"};
     static const boost::regex parallels_pattern {"^Parallels"};
 
     result kvm(const sources::cpuid_base& cpuid_source,
@@ -22,6 +23,10 @@ namespace whereami { namespace detectors {
 
             if (dmi_source.bios_vendor() == "Google") {
                 res.set("google", true);
+            }
+
+            if (re_search(dmi_source.product_name(), openstack_pattern)) {
+                res.set("openstack", true);
             }
         }
 
