@@ -33,7 +33,8 @@ set(PROJECT_SOURCES
     "src/sources/cgroup_source.cc"
     "src/sources/cpuid_source.cc"
     "src/sources/dmi_source.cc"
-    "src/sources/smbios_base.cc")
+    "src/sources/smbios_base.cc"
+    "src/sources/system_profiler_source.cc")
 
 if(WIN32)
     set(PROJECT_SOURCES ${PROJECT_SOURCES} "src/sources/wmi_source.cc")

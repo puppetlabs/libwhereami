@@ -19,7 +19,8 @@ set(TEST_CASES
     "fixtures/dmi_fixtures.cc"
     "sources/cgroup_source.cc"
     "sources/cpuid_source.cc"
-    "sources/dmi_source.cc")
+    "sources/dmi_source.cc"
+    "sources/system_profiler_source.cc")
 
 add_executable(lib${PROJECT_NAME}_test $<TARGET_OBJECTS:libprojectsrc> ${TEST_CASES} main.cc)
 target_link_libraries(lib${PROJECT_NAME}_test
