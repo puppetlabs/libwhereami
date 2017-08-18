@@ -45,7 +45,7 @@ namespace whereami {
         sources::cgroup cgroup_source;
         sources::system_profiler system_profiler_source;
 
-        auto virtualbox_result = detectors::virtualbox(cpuid_source, smbios_source);
+        auto virtualbox_result = detectors::virtualbox(cpuid_source, smbios_source, system_profiler_source);
 
         if (virtualbox_result.valid()) {
             results.emplace_back(virtualbox_result);

@@ -15,6 +15,7 @@ namespace whereami { namespace testing { namespace system_profiler {
          * Common fixture paths within the fixture base path
          */
         constexpr static char const* SYSTEM_PROFILER_PHYSICAL {"output/system_profiler/physical.txt"};
+        constexpr static char const* SYSTEM_PROFILER_VIRTUALBOX {"output/system_profiler/virtualbox.txt"};
         constexpr static char const* SYSTEM_PROFILER_VMWARE {"output/system_profiler/vmware.txt"};
 
         /**
