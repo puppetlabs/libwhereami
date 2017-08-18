@@ -41,18 +41,24 @@ static string vmware_bios_address_to_version(int address)
 namespace whereami { namespace detectors {
 
     result vmware(const sources::cpuid_base& cpuid_source,
-                  sources::smbios_base& smbios_source)
+                  sources::smbios_base& smbios_source,
+                  sources::system_profiler& system_profiler_source)
     {
         result res {vm::vmware};
 
-        if (smbios_source.manufacturer() == "VMware, Inc." ||
-            cpuid_source.vendor() == "VMwareVMware") {
+        if (cpuid_source.vendor() == "VMwareVMware" ||
+            smbios_source.manufacturer() == "VMware, Inc." ||
+            system_profiler_source.model_identifier().find("VMware") != string::npos) {
             res.validate();
+        }
 
-            auto bios_address = smbios_source.bios_address();
-            if (!bios_address.empty()) {
+        auto bios_address = smbios_source.bios_address();
+        if (!bios_address.empty()) {
+            try {
                 auto value = stoi(bios_address, nullptr, 16);
                 res.set("version", vmware_bios_address_to_version(value));
+            } catch (exception& e) {
+                // If a strange string was returned as the BIOS address, ignore it
             }
         }
 
