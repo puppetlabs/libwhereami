@@ -6,32 +6,40 @@ using namespace std;
 
 namespace whereami { namespace testing { namespace dmi {
 
-    dmi_fixture::dmi_fixture(std::string const& dmidecode_path, std::string const& sys_path)
-        : dmidecode_fixture_path_(dmidecode_path), sys_fixture_path_(sys_path)
-    {
-        data_.reset(nullptr);
-        collect_data();
-    }
-
-    std::string dmi_fixture::sys_path(std::string const& filename = "") const
+    std::string dmi_fixture::sys_path(std::string const& filename) const
     {
         return fixture_root + sys_fixture_path_ + filename;
     }
 
-    void dmi_fixture::collect_data_from_dmidecode()
+    bool dmi_fixture::collect_data_from_dmidecode()
     {
-        int dmi_type = -1;
         std::string dmidecode_output;
-        if (!load_fixture(dmidecode_fixture_path_, dmidecode_output)) return;
+
+        if (!load_fixture(dmidecode_fixture_path_, dmidecode_output)) {
+            return false;
+        }
+
+        int dmi_type {-1};
+
         leatherman::util::each_line(dmidecode_output, [&](string& line) {
             parse_dmidecode_line(line, dmi_type);
             return true;
         });
+
+        return data_.get() != nullptr;
     }
 
-    dmi_fixture_values::dmi_fixture_values(sources::dmi_data&& data)
+    dmi_fixture_values::dmi_fixture_values(sources::smbios_data&& data)
     {
-        data_.reset(new dmi_data(move(data)));
+        data_.reset(new smbios_data(move(data)));
+    }
+
+    smbios_data const* dmi_fixture_empty::data()
+    {
+        if (!data_) {
+            data_.reset(new smbios_data);
+        }
+        return data_.get();
     }
 
 }}}  // namespace whereami::testing::dmi

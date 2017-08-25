@@ -7,6 +7,7 @@ set(TEST_CASES
     "detectors/openvz_detector.cc"
     "detectors/result.cc"
     "detectors/docker_detector.cc"
+    "detectors/hyperv_detector.cc"
     "detectors/kvm_detector.cc"
     "detectors/lxc_detector.cc"
     "detectors/nspawn_detector.cc"

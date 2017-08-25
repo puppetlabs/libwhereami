@@ -23,6 +23,7 @@ set(PROJECT_SOURCES
     "src/detectors/openvz_detector.cc"
     "src/detectors/result.cc"
     "src/detectors/docker_detector.cc"
+    "src/detectors/hyperv_detector.cc"
     "src/detectors/kvm_detector.cc"
     "src/detectors/lxc_detector.cc"
     "src/detectors/nspawn_detector.cc"
@@ -30,7 +31,12 @@ set(PROJECT_SOURCES
     "src/detectors/vmware_detector.cc"
     "src/sources/cgroup_source.cc"
     "src/sources/cpuid_source.cc"
-    "src/sources/dmi_source.cc")
+    "src/sources/dmi_source.cc"
+    "src/sources/smbios_base.cc")
+
+if(WIN32)
+    set(PROJECT_SOURCES ${PROJECT_SOURCES} "src/sources/wmi_source.cc")
+endif()
 
 ## An object target is generated that can be used by both the library and test executable targets.
 ## Without the intermediate target, unexported symbols can't be tested.
