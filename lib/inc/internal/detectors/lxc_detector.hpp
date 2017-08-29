@@ -1,6 +1,6 @@
 #pragma once
 
-#include <internal/detectors/result.hpp>
+#include <whereami/result.hpp>
 #include <internal/sources/cgroup_source.hpp>
 
 namespace whereami { namespace detectors {

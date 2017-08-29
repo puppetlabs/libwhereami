@@ -1,8 +1,8 @@
-#include <internal/detectors/result.hpp>
+#include <whereami/result.hpp>
 
 using namespace std;
 
-namespace whereami { namespace detectors {
+namespace whereami {
 
     bool result::valid() const
     {
@@ -18,4 +18,10 @@ namespace whereami { namespace detectors {
     {
         return name_;
     }
-}}  // namespace whereami::detectors
+
+    unordered_map<string, metadata_value> result::metadata() const
+    {
+        return metadata_.get_all();
+    }
+
+}  // namespace whereami

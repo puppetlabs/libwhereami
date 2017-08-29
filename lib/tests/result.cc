@@ -1,10 +1,9 @@
 #include <catch.hpp>
-#include <internal/detectors/result.hpp>
+#include <whereami/result.hpp>
 #include <internal/vm.hpp>
 
 using namespace std;
 using namespace whereami;
-using namespace whereami::detectors;
 
 SCENARIO("Using a detector result") {
     WHEN("it is newly created") {
@@ -27,8 +26,12 @@ SCENARIO("Using a detector result") {
         result res {vm::kvm};
         THEN("values can be set") {
             REQUIRE_NOTHROW(res.set("foo", "bar"));
+            REQUIRE_NOTHROW(res.set("baz", "zot"));
             AND_THEN("they can be retrieved") {
                 REQUIRE(res.get<string>("foo") == "bar");
+            }
+            AND_THEN("all metadata can be retrieved at once") {
+                REQUIRE(res.metadata().size() == 2);
             }
         }
     }

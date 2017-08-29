@@ -19,9 +19,7 @@ include_directories(inc ${Boost_INCLUDE_DIRS} ${LEATHERMAN_INCLUDE_DIRS})
 
 set(PROJECT_SOURCES
     "src/${PROJECT_NAME}.cc"
-    "src/detectors/metadata.cc"
     "src/detectors/openvz_detector.cc"
-    "src/detectors/result.cc"
     "src/detectors/docker_detector.cc"
     "src/detectors/hyperv_detector.cc"
     "src/detectors/kvm_detector.cc"
@@ -30,6 +28,8 @@ set(PROJECT_SOURCES
     "src/detectors/virtualbox_detector.cc"
     "src/detectors/vmware_detector.cc"
     "src/detectors/xen_detector.cc"
+    "src/metadata.cc"
+    "src/result.cc"
     "src/sources/cgroup_source.cc"
     "src/sources/cpuid_source.cc"
     "src/sources/dmi_source.cc"

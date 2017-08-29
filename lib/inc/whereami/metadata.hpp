@@ -3,7 +3,7 @@
 #include <unordered_map>
 #include <boost/variant.hpp>
 
-namespace whereami { namespace detectors {
+namespace whereami {
 
     /**
      * Metadata values can be string, boolean, or int
@@ -60,6 +60,12 @@ namespace whereami { namespace detectors {
             return boost::get<T>((*it).second);
         }
 
+        /**
+         * Retrieve all values
+         * @return A copy of all the metadata
+         */
+        std::unordered_map<std::string, metadata_value> get_all() const;
+
     protected:
         /**
          * Metadata key/value map
@@ -67,4 +73,4 @@ namespace whereami { namespace detectors {
         std::unordered_map <std::string, metadata_value> data_;
     };
 
-}}  // namespace whereami::detectors
+}  // namespace whereami

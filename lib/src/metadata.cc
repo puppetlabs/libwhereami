@@ -1,8 +1,8 @@
-#include <internal/detectors/metadata.hpp>
+#include <whereami/metadata.hpp>
 
 using namespace std;
 
-namespace whereami { namespace detectors {
+namespace whereami {
 
     void metadata::set(string const& key, bool value)
     {
@@ -24,4 +24,9 @@ namespace whereami { namespace detectors {
         data_.emplace(key, value);
     }
 
-}}  // namespace whereami::detectors
+    unordered_map<string, metadata_value> metadata::get_all() const
+    {
+        return data_;
+    }
+
+}  // namespace whereami
