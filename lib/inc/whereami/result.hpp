@@ -1,8 +1,8 @@
 #pragma once
 
-#include <internal/detectors/metadata.hpp>
+#include <whereami/metadata.hpp>
 
-namespace whereami { namespace detectors {
+namespace whereami {
 
     /**
      * Represents the result of a hypervisor detector
@@ -32,6 +32,12 @@ namespace whereami { namespace detectors {
          * Marks the result as having successfully detected the hypervisor
          */
         void validate();
+
+        /**
+         * Returns all metadata
+         * @return all metadata for this hypervisor
+         */
+        std::unordered_map<std::string, metadata_value> metadata() const;
 
         /**
          * Sets a metadata key and value
@@ -69,7 +75,7 @@ namespace whereami { namespace detectors {
         /**
          * Metadata about the hypervisor
          */
-        metadata metadata_;
+        class metadata metadata_;
     };
 
-}};  // namespace whereami::detectors
+};  // namespace whereami

@@ -1,10 +1,8 @@
 #pragma once
 
-#include <internal/detectors/result.hpp>
+#include <whereami/result.hpp>
 #include <internal/sources/cpuid_source.hpp>
 #include <internal/sources/dmi_source.hpp>
-#include <csetjmp>
-#include <csignal>
 #include <string>
 
 namespace whereami { namespace detectors {

@@ -1,9 +1,8 @@
 #include <catch.hpp>
-#include <internal/detectors/metadata.hpp>
+#include <whereami/metadata.hpp>
 
 using namespace std;
 using namespace whereami;
-using namespace whereami::detectors;
 
 SCENARIO("Using a metadata object") {
     WHEN("a string literal metadata value is added") {

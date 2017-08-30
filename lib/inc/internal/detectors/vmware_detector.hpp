@@ -1,6 +1,6 @@
 #pragma once
 
-#include <internal/detectors/result.hpp>
+#include <whereami/result.hpp>
 #include <internal/sources/cpuid_source.hpp>
 #include <internal/sources/smbios_base.hpp>
 #include <internal/sources/system_profiler_source.hpp>

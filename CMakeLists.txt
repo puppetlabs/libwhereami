@@ -27,12 +27,19 @@ include(options)
 include(cflags)
 set(${PROJECT_NAME_UPPER}_CXX_FLAGS "${LEATHERMAN_CXX_FLAGS}")
 add_definitions(${LEATHERMAN_DEFINITIONS})
-add_definitions(-DLEATHERMAN_I18N)
-## Pull in helper macros for working with leatherman libraries
-include(leatherman)
+
+if(LEATHERMAN_USE_LOCALES)
+    add_definitions(-DLEATHERMAN_I18N)
+    set(BOOST_COMPONENTS locale)
+endif()
+
+list(APPEND BOOST_COMPONENTS filesystem regex)
 
 # Add other dependencies
-find_package(Boost 1.54 REQUIRED COMPONENTS program_options)
+find_package(Boost 1.54 REQUIRED COMPONENTS ${BOOST_COMPONENTS})
+
+## Pull in helper macros for working with leatherman libraries
+include(leatherman)
 
 # Display a summary of the features
 include(FeatureSummary)
@@ -43,7 +50,6 @@ add_subdirectory(lib)
 add_subdirectory(locales)
 
 # Add cpplint and cppcheck targets
-file(GLOB_RECURSE ALL_SOURCES lib/src/*.cc lib/inc/*.hpp)
 add_cpplint_files(${ALL_SOURCES})
 enable_cpplint()
 

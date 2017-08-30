@@ -3,9 +3,7 @@ include_directories(${LEATHERMAN_CATCH_INCLUDE})
 
 set(TEST_CASES
     "${PROJECT_NAME}.cc"
-    "detectors/metadata.cc"
     "detectors/openvz_detector.cc"
-    "detectors/result.cc"
     "detectors/docker_detector.cc"
     "detectors/hyperv_detector.cc"
     "detectors/kvm_detector.cc"
@@ -17,6 +15,8 @@ set(TEST_CASES
     "fixtures.cc"
     "fixtures/cpuid_fixtures.cc"
     "fixtures/dmi_fixtures.cc"
+    "metadata.cc"
+    "result.cc"
     "sources/cgroup_source.cc"
     "sources/cpuid_source.cc"
     "sources/dmi_source.cc"
