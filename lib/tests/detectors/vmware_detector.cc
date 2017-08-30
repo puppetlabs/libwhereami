@@ -2,12 +2,14 @@
 #include <internal/detectors/vmware_detector.hpp>
 #include "../fixtures/cpuid_fixtures.hpp"
 #include "../fixtures/dmi_fixtures.hpp"
+#include "../fixtures/system_profiler_fixtures.hpp"
 
 using namespace std;
 using namespace whereami::detectors;
 using namespace whereami::sources;
 using namespace whereami::testing::cpuid;
 using namespace whereami::testing::dmi;
+using namespace whereami::testing::system_profiler;
 
 SCENARIO("Using the VMware detector") {
     WHEN("running as root on a Linux VMware guest") {
@@ -28,12 +30,13 @@ SCENARIO("Using the VMware detector") {
                 "[MS_VM_CERT/SHA1/27d66596a61c48dd3dc7216fd715126e33f59ae7]",
                 "Welcome to the Virtual Machine",
             }});
-        THEN("the result should be valid") {
-            auto res = vmware(cpuid_source, dmi_source);
+        system_profiler_fixture system_profiler_source({});
+        THEN("the result is valid") {
+            auto res = vmware(cpuid_source, dmi_source, system_profiler_source);
             REQUIRE(res.valid());
         }
-        THEN("the result should contain version metdata") {
-            auto res = vmware(cpuid_source, dmi_source);
+        THEN("the result contains version metdata") {
+            auto res = vmware(cpuid_source, dmi_source, system_profiler_source);
             REQUIRE(res.get<string>("version") == "ESXi 6.5");
         }
     }
@@ -53,12 +56,13 @@ SCENARIO("Using the VMware detector") {
             "VMware, Inc.",
             "VMware Virtual Platform",
             {}});
-        THEN("it should return true") {
-            auto res = vmware(cpuid_source, dmi_source);
+        system_profiler_fixture system_profiler_source({});
+        THEN("the result is valid") {
+            auto res = vmware(cpuid_source, dmi_source, system_profiler_source);
             REQUIRE(res.valid());
         }
-        THEN("it should not contain version metdata") {
-            auto res = vmware(cpuid_source, dmi_source);
+        THEN("the result does not contain version metdata") {
+            auto res = vmware(cpuid_source, dmi_source, system_profiler_source);
             REQUIRE(res.get<string>("version") == "");
         }
     }
@@ -71,8 +75,24 @@ SCENARIO("Using the VMware detector") {
                 {0, register_fixtures::HYPERVISOR_PRESENT}}}};
         cpuid_fixture cpuid_source {values};
         dmi_fixture_empty dmi_source;
-        THEN("it should return true") {
-            REQUIRE(vmware(cpuid_source, dmi_source).valid());
+        system_profiler_fixture system_profiler_source({});
+        THEN("the result is valid") {
+            REQUIRE(vmware(cpuid_source, dmi_source, system_profiler_source).valid());
+        }
+    }
+
+    WHEN("running in a MacOS VMware guest") {
+        leaf_register_map values {
+            {VENDOR_LEAF, {
+                {0, register_fixtures::VENDOR_NONE}}},
+            {HYPERVISOR_PRESENT_LEAF, {
+                {0, register_fixtures::HYPERVISOR_ABSENT}}}};
+        cpuid_fixture cpuid_source {values};
+        dmi_fixture_empty dmi_source;
+        system_profiler_fixture system_profiler_source(system_profiler_fixture::SYSTEM_PROFILER_VMWARE);
+        THEN("the result is valid") {
+            auto res = vmware(cpuid_source, dmi_source, system_profiler_source);
+            REQUIRE(res.valid());
         }
     }
 
@@ -91,8 +111,10 @@ SCENARIO("Using the VMware detector") {
             "Other",
             "Other",
             {}});
-        THEN("it should return false") {
-            REQUIRE_FALSE(vmware(cpuid_source, dmi_source).valid());
+        system_profiler_fixture system_profiler_source({});
+        THEN("the result is not valid") {
+            auto res = vmware(cpuid_source, dmi_source, system_profiler_source);
+            REQUIRE_FALSE(res.valid());
         }
     }
 }

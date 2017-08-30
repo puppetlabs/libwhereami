@@ -10,11 +10,13 @@ using namespace leatherman::util;
 namespace whereami { namespace detectors {
 
     result virtualbox(const sources::cpuid_base& cpuid_source,
-                      sources::smbios_base& smbios_source) {
+                      sources::smbios_base& smbios_source,
+                      sources::system_profiler& system_profiler_source) {
         result res {vm::virtualbox};
 
         if (cpuid_source.vendor() == "VBoxVBoxVBox" ||
-            smbios_source.product_name() == "VirtualBox") {
+            smbios_source.product_name() == "VirtualBox" ||
+            system_profiler_source.boot_rom_version() == "VirtualBox") {
             res.validate();
 
             // Look for VirtualBox version and revision in DMI OEM strings

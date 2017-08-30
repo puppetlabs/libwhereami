@@ -16,6 +16,7 @@
 #include <internal/sources/wmi_source.hpp>
 #else
 #include <internal/sources/dmi_source.hpp>
+#include <internal/sources/system_profiler_source.hpp>
 #endif
 
 using namespace std;
@@ -42,14 +43,15 @@ namespace whereami {
 
         sources::cpuid cpuid_source;
         sources::cgroup cgroup_source;
+        sources::system_profiler system_profiler_source;
 
-        auto virtualbox_result = detectors::virtualbox(cpuid_source, smbios_source);
+        auto virtualbox_result = detectors::virtualbox(cpuid_source, smbios_source, system_profiler_source);
 
         if (virtualbox_result.valid()) {
             results.emplace_back(virtualbox_result);
         }
 
-        auto vmware_result = detectors::vmware(cpuid_source, smbios_source);
+        auto vmware_result = detectors::vmware(cpuid_source, smbios_source, system_profiler_source);
 
         if (vmware_result.valid()) {
             results.emplace_back(vmware_result);
