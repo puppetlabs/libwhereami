@@ -13,6 +13,7 @@ set(TEST_CASES
     "detectors/nspawn_detector.cc"
     "detectors/virtualbox_detector.cc"
     "detectors/vmware_detector.cc"
+    "detectors/xen_detector.cc"
     "fixtures.cc"
     "fixtures/cpuid_fixtures.cc"
     "fixtures/dmi_fixtures.cc"

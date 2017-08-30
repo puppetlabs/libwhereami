@@ -11,10 +11,12 @@ using namespace whereami::testing::cpuid;
 
 SCENARIO("Using the KVM detector") {
     WHEN("running on a KVM guest") {
-        cpuid_fixture_values cpuid_source({
-            {VENDOR_LEAF,        register_fixtures::VENDOR_KVMKVMKVM},
-            {HYPERVISOR_PRESENT, register_fixtures::HYPERVISOR_PRESENT},
-        });
+        leaf_register_map values {
+            {VENDOR_LEAF, {
+                {0, register_fixtures::VENDOR_KVMKVMKVM}}},
+            {HYPERVISOR_PRESENT_LEAF, {
+                {0, register_fixtures::HYPERVISOR_PRESENT}}}};
+        cpuid_fixture cpuid_source {values};
         dmi_fixture_values dmi_source({
             "0xe8000",
             "SeaBIOS",
@@ -31,10 +33,12 @@ SCENARIO("Using the KVM detector") {
     }
 
     WHEN("running on a VirtualBox guest") {
-        cpuid_fixture_values cpuid_source({
-            {VENDOR_LEAF,        register_fixtures::VENDOR_KVMKVMKVM},
-            {HYPERVISOR_PRESENT, register_fixtures::HYPERVISOR_PRESENT},
-        });
+        leaf_register_map values {
+            {VENDOR_LEAF, {
+                {0, register_fixtures::VENDOR_KVMKVMKVM}}},
+            {HYPERVISOR_PRESENT_LEAF, {
+                {0, register_fixtures::HYPERVISOR_PRESENT}}}};
+        cpuid_fixture cpuid_source {values};
         dmi_fixture_values dmi_source({
             "0x30000",
             "VirtualBox",
@@ -54,10 +58,12 @@ SCENARIO("Using the KVM detector") {
     }
 
     WHEN("running on QEMU without KVM") {
-        cpuid_fixture_values cpuid_source({
-            {VENDOR_LEAF,        register_fixtures::VENDOR_AUTHENTICAMD},
-            {HYPERVISOR_PRESENT, register_fixtures::HYPERVISOR_PRESENT},
-        });
+        leaf_register_map values {
+            {VENDOR_LEAF, {
+                {0, register_fixtures::VENDOR_AuthenticAMD}}},
+            {HYPERVISOR_PRESENT_LEAF, {
+                {0, register_fixtures::HYPERVISOR_PRESENT}}}};
+        cpuid_fixture cpuid_source {values};
         dmi_fixture_values dmi_source({
             "0xe8000",
             "SeaBIOS",
@@ -74,10 +80,12 @@ SCENARIO("Using the KVM detector") {
     }
 
     WHEN("running on a Parallels guest") {
-        cpuid_fixture_values cpuid_source({
-            {VENDOR_LEAF,        register_fixtures::VENDOR_KVMKVMKVM},
-            {HYPERVISOR_PRESENT, register_fixtures::HYPERVISOR_PRESENT},
-        });
+        leaf_register_map values {
+            {VENDOR_LEAF, {
+                {0, register_fixtures::VENDOR_KVMKVMKVM}}},
+            {HYPERVISOR_PRESENT_LEAF, {
+                {0, register_fixtures::HYPERVISOR_PRESENT}}}};
+        cpuid_fixture cpuid_source {values};
         dmi_fixture_values dmi_source({
             "",
             "Parallels Software International Inc.",
@@ -94,10 +102,12 @@ SCENARIO("Using the KVM detector") {
     }
 
     WHEN("Running on Google Compute Engine") {
-        cpuid_fixture_values cpuid_source({
-            {VENDOR_LEAF,        register_fixtures::VENDOR_KVMKVMKVM},
-            {HYPERVISOR_PRESENT, register_fixtures::HYPERVISOR_PRESENT},
-        });
+        leaf_register_map values {
+            {VENDOR_LEAF, {
+                {0, register_fixtures::VENDOR_KVMKVMKVM}}},
+            {HYPERVISOR_PRESENT_LEAF, {
+                {0, register_fixtures::HYPERVISOR_PRESENT}}}};
+        cpuid_fixture cpuid_source {values};
         dmi_fixture_values dmi_source({
             "0xe8000",
             "Google",
@@ -117,10 +127,12 @@ SCENARIO("Using the KVM detector") {
     }
 
     WHEN("Running on OpenStack") {
-        cpuid_fixture_values cpuid_source({
-            {VENDOR_LEAF,        register_fixtures::VENDOR_KVMKVMKVM},
-            {HYPERVISOR_PRESENT, register_fixtures::HYPERVISOR_PRESENT},
-        });
+        leaf_register_map values {
+            {VENDOR_LEAF, {
+                  {0, register_fixtures::VENDOR_KVMKVMKVM}}},
+            {HYPERVISOR_PRESENT_LEAF, {
+                  {0, register_fixtures::HYPERVISOR_PRESENT}}}};
+        cpuid_fixture cpuid_source {values};
         dmi_fixture_values dmi_source({
             "0xE8000",
             "SeaBIOS",
