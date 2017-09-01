@@ -18,8 +18,19 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #. debug
+#: lib/src/detectors/openvz_detector.cc
 #: lib/src/sources/dmi_source.cc
-msgid " cannot be accessed."
+msgid "{1}: file could not be read."
+msgstr ""
+
+#. debug
+#: lib/src/sources/cgroup_source.cc
+msgid "File {!} could not be read"
+msgstr ""
+
+#. debug
+#: lib/src/sources/dmi_source.cc
+msgid " not found."
 msgstr ""
 
 #. debug
@@ -34,12 +45,12 @@ msgstr ""
 
 #. debug
 #: lib/src/sources/dmi_source.cc
-msgid "{1}: {2}."
+msgid "Error while running dmidecode ({1})"
 msgstr ""
 
 #. debug
 #: lib/src/sources/dmi_source.cc
-msgid "{1}: file could not be read."
+msgid "{1}: {2}."
 msgstr ""
 
 #. debug
