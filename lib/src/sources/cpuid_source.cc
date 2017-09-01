@@ -1,4 +1,3 @@
-#include <iostream>
 #include <internal/sources/cpuid_source.hpp>
 
 using namespace whereami::sources;
@@ -11,8 +10,8 @@ namespace whereami { namespace sources {
 #if defined(__x86_64__) || defined(__i386__)
         // ebx is the PIC register in 32-bit environments; Don't clobber it
         asm volatile(
-            "xchgl %%ebx,%1; xor %%ebx,%%ebx; cpuid; xchgl %%ebx,%1"
-            : "=a" (result.eax), "=b" (result.ebx), "=c" (result.ecx), "=d" (result.edx)
+            "xchgl %%ebx,%k1; xor %%ebx,%%ebx; cpuid; xchgl %%ebx,%k1"
+            : "=a" (result.eax), "=&r" (result.ebx), "=c" (result.ecx), "=d" (result.edx)
             : "a" (leaf), "c" (subleaf));
 #endif
         return result;
