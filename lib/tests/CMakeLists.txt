@@ -28,6 +28,10 @@ target_link_libraries(lib${PROJECT_NAME}_test
     ${LEATHERMAN_LIBRARIES}
 )
 
+if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin" AND BOOST_STATIC AND LEATHERMAN_USE_LOCALES)
+    target_link_libraries(lib${PROJECT_NAME}_test iconv)
+endif()
+
 add_test(NAME "unit_tests" COMMAND lib${PROJECT_NAME}_test)
 
 # Generate a file containing the path to the fixtures
