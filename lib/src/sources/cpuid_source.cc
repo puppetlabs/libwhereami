@@ -7,7 +7,12 @@ namespace whereami { namespace sources {
 
     cpuid_registers cpuid_base::read_cpuid(unsigned int leaf, unsigned int subleaf) const {
         cpuid_registers result;
-#if defined(__x86_64__) || defined(__i386__)
+#ifdef __APPLE__
+        asm volatile(
+            "xchgq %%rbx, %q1; cpuid; xchgq %%rbx, %q1"
+            : "=a" (result.eax), "=&r" (result.ebx), "=c" (result.ecx), "=d" (result.edx)
+            : "a" (leaf), "c" (subleaf));
+#elif defined(__x86_64__) || defined(__i386__)
         // ebx is the PIC register in 32-bit environments; Don't clobber it
         asm volatile(
             "xchgl %%ebx,%k1; xor %%ebx,%%ebx; cpuid; xchgl %%ebx,%k1"
