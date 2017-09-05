@@ -14,7 +14,7 @@ namespace whereami { namespace sources {
         // see https://gcc.gnu.org/bugzilla/show_bug.cgi?id=47602
         // We may not need this at all on modern GCCs, but ¯\_(ツ)_/¯
         asm volatile(
-            "mov %%ebx,%k1; xor %%ebx,%%ebx; cpuid; xchgl %%ebx,%k1"
+            "mov %%ebx,%k1; cpuid; xchgl %%ebx,%k1"
             : "=a" (result.eax), "=&r" (result.ebx), "=c" (result.ecx), "=d" (result.edx)
             : "a" (leaf), "c" (subleaf));
 #elif defined(__i386__) || defined(__x86_64__)
