@@ -7,16 +7,20 @@ namespace whereami { namespace sources {
 
     cpuid_registers cpuid_base::read_cpuid(unsigned int leaf, unsigned int subleaf) const {
         cpuid_registers result;
-#ifdef __APPLE__
+#if defined(__i386__) && defined(__PIC__)
+        // ebx is used for PIC purposes on i386, so we need to manually
+        // back it up. The compiler's register allocator can't do this
+        // for us, because ebx is permanently reserved in its view.
+        // see https://gcc.gnu.org/bugzilla/show_bug.cgi?id=47602
+        // We may not need this at all on modern GCCs, but ¯\_(ツ)_/¯
         asm volatile(
-            "xchgq %%rbx, %q1; cpuid; xchgq %%rbx, %q1"
+            "mov %%ebx,%k1; xor %%ebx,%%ebx; cpuid; xchgl %%ebx,%k1"
             : "=a" (result.eax), "=&r" (result.ebx), "=c" (result.ecx), "=d" (result.edx)
             : "a" (leaf), "c" (subleaf));
-#elif defined(__x86_64__) || defined(__i386__)
-        // ebx is the PIC register in 32-bit environments; Don't clobber it
+#elif defined(__i386__) || defined(__x86_64__)
         asm volatile(
-            "xchgl %%ebx,%k1; xor %%ebx,%%ebx; cpuid; xchgl %%ebx,%k1"
-            : "=a" (result.eax), "=&r" (result.ebx), "=c" (result.ecx), "=d" (result.edx)
+            "cpuid"
+            : "=a" (result.eax), "=b" (result.ebx), "=c" (result.ecx), "=d" (result.edx)
             : "a" (leaf), "c" (subleaf));
 #endif
         return result;
