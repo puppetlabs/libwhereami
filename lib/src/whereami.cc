@@ -13,6 +13,7 @@
 #include <internal/detectors/virtualbox_detector.hpp>
 #include <internal/detectors/vmware_detector.hpp>
 #include <internal/detectors/wpar_detector.hpp>
+#include <internal/detectors/zone_detector.hpp>
 #include <leatherman/logging/logging.hpp>
 
 #if defined(_WIN32)
@@ -101,6 +102,12 @@ namespace whereami {
 
         if (wpar_result.valid()) {
             results.emplace_back(wpar_result);
+        }
+
+        auto zone_result = detectors::zone();
+
+        if (zone_result.valid()) {
+            results.emplace_back(zone_result);
         }
 
         return results;

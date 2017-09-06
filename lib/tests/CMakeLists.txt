@@ -14,6 +14,7 @@ set(TEST_CASES
     "detectors/vmware_detector.cc"
     "detectors/wpar_detector.cc"
     "detectors/xen_detector.cc"
+    "detectors/zone_detector.cc"
     "fixtures.cc"
     "fixtures/cpuid_fixtures.cc"
     "fixtures/dmi_fixtures.cc"

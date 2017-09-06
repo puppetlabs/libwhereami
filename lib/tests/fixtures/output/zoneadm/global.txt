@@ -1,0 +1,10 @@
+0:global:running:/::solaris:shared:-:none:
+1:ci-s10sparc1:running:/zones/ci-s10sparc1:47591f59-5440-4527-9445-d5a0b5033aa9:solaris10:excl:-:none:
+3:builder-s10sparc3:running:/zones/builder-s10sparc3:c4c38a7b-c48d-44c3-bc1b-d9c6afa52d92:solaris10:excl:-:none:
+4:builder-s10sparc2:running:/zones/builder-s10sparc2:e8211613-aadb-c77d-eccb-a69d7f4bb68a:solaris10:excl:-:none:
+5:builder-s10sparc1:running:/zones/builder-s10sparc1:7a01e31d-2afc-40f9-c3e0-d92106d74555:solaris10:excl:-:none:
+7:s10-template:running:/zones/s10-template:f0963ee2-fd27-6df7-f65f-92905d546a60:solaris10:excl:-:none:
+8:s11-template:running:/zones/s11-template:8d45a396-bf0d-40d8-9d29-e689db62b3b1:solaris:excl:-:none:
+9:beaker-sol11:running:/zones/beaker-sol11:4e171bde-da3f-49af-916a-e31a83b5dc09:solaris:excl:-:none:
+513:cisparc10:running:/zones/cisparc10:e39c8b2b-f0fd-4ab0-b339-a0c3efa7a692:solaris10:excl:-:none:
+515:cisparc:running:/zones/cisparc:9903e75b-f048-4e38-83b3-977cde7b3783:solaris:excl:-:none:
