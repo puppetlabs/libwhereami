@@ -21,10 +21,11 @@ namespace whereami { namespace sources {
          */
         virtual bool collect_data_from_sys();
         /**
-         * Attempt to collect data from dmidecode executable (requires root)
+         * Attempt to collect data from dmidecode executable output (requires root)
+         * @param output The output of the dmidecode executable
          * @return Whether data was collected
          */
-        virtual bool collect_data_from_dmidecode();
+        virtual bool collect_data_from_dmidecode(std::string const& output);
         /**
          * Examine a line of dmidecode output for useful information
          * @param line The contents of the line

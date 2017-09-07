@@ -38,10 +38,10 @@ namespace whereami { namespace testing { namespace dmi {
          */
         std::string sys_path(std::string const& filename = "") const override;
         /**
-         * Read dmidecode output data from a fixture file
-         * @return
+         * Collect data from dmidecode and/or /sys/
+         * @return A pointer to the data object
          */
-        bool collect_data_from_dmidecode() override;
+        sources::smbios_data const* data() override;
         /**
          * The dmidecode fixture file path
          */
