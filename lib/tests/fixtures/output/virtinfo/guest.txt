@@ -1,0 +1,6 @@
+VERSION 1.0
+DOMAINROLE|impl=LDoms|control=false|io=false|service=false|root=false
+DOMAINNAME|name=sol10-2
+DOMAINUUID|uuid=ddfb4bdc-29f7-4b44-8d62-d3b0eaafd966
+DOMAINCONTROL|name=opdx-a0-sun2
+DOMAINCHASSIS|serialno=AK00358110

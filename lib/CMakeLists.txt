@@ -23,6 +23,7 @@ set(PROJECT_SOURCES
     "src/detectors/docker_detector.cc"
     "src/detectors/hyperv_detector.cc"
     "src/detectors/kvm_detector.cc"
+    "src/detectors/ldom_detector.cc"
     "src/detectors/lpar_detector.cc"
     "src/detectors/lxc_detector.cc"
     "src/detectors/nspawn_detector.cc"
