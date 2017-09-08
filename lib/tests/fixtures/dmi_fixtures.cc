@@ -11,22 +11,21 @@ namespace whereami { namespace testing { namespace dmi {
         return fixture_root + sys_fixture_path_ + filename;
     }
 
-    bool dmi_fixture::collect_data_from_dmidecode()
+    smbios_data const* dmi_fixture::data()
     {
-        std::string dmidecode_output;
+        if (!data_) {
+            string dmidecode_output;
+            load_fixture(dmidecode_fixture_path_, dmidecode_output);
 
-        if (!load_fixture(dmidecode_fixture_path_, dmidecode_output)) {
-            return false;
+            collect_data_from_dmidecode(dmidecode_output);
+
+            if (data_ == nullptr) {
+                if (!collect_data_from_sys()) {
+                    data_.reset(new smbios_data);
+                }
+            }
         }
-
-        int dmi_type {-1};
-
-        leatherman::util::each_line(dmidecode_output, [&](string& line) {
-            parse_dmidecode_line(line, dmi_type);
-            return true;
-        });
-
-        return data_.get() != nullptr;
+        return data_.get();
     }
 
     dmi_fixture_values::dmi_fixture_values(sources::smbios_data&& data)

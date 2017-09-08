@@ -22,8 +22,22 @@ namespace whereami { namespace sources {
     {
         if (!data_) {
             // Attempt to use dmidecode first, because it yields extra metadata (requires root)
-            if (!collect_data_from_dmidecode()) {
-                // Otherwise, collect most of dmidecode's data from user-accessible files in /sys/
+            string exec_path = lth_exe::which("dmidecode");
+
+            if (exec_path.empty()) {
+                LOG_DEBUG("dmidecode executable not found");
+            } else {
+                auto dmidecode_result = lth_exe::execute(exec_path);
+                if (dmidecode_result.success) {
+                    collect_data_from_dmidecode(dmidecode_result.output);
+                } else {
+                    LOG_DEBUG("Error while running dmidecode ({1})", dmidecode_result.exit_code);
+                }
+            }
+
+            if (data_ == nullptr) {
+                // Sometimes dmidecode is present but the output is empty.
+                // If this is the case or we are not root, collect most of the same data from user-accessible files in /sys/.
                 if (!collect_data_from_sys()) {
                     // If both methods failed, the result should be empty
                     data_.reset(new smbios_data);
@@ -58,31 +72,15 @@ namespace whereami { namespace sources {
         return true;
     }
 
-    bool dmi::collect_data_from_dmidecode()
+    bool dmi::collect_data_from_dmidecode(string const& output)
     {
-        LOG_DEBUG("Using dmidecode to query DMI information.");
-
-        string exec_path = lth_exe::which("dmidecode");
-
-        if (exec_path.empty()) {
-            LOG_DEBUG("dmidecode executable not found");
-            return false;
-        }
-
-        auto res = lth_exe::execute(exec_path);
-
-        if (res.exit_code != 0) {
-            LOG_DEBUG("Error while running dmidecode ({1})", res.exit_code);
-            return false;
-        }
-
         int dmi_type {-1};
-        each_line(res.output, [&](string& line) {
+        each_line(output, [&](string& line) {
             parse_dmidecode_line(line, dmi_type);
             return true;
         });
 
-        return data_.get() == nullptr;
+        return data_ != nullptr;
     }
 
     string dmi::read_file(string const& path)
