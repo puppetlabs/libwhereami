@@ -33,6 +33,7 @@ set(PROJECT_SOURCES
     "src/sources/cgroup_source.cc"
     "src/sources/cpuid_source.cc"
     "src/sources/dmi_source.cc"
+    "src/sources/lparstat_source.cc"
     "src/sources/smbios_base.cc"
     "src/sources/system_profiler_source.cc")
 
