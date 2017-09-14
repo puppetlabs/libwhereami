@@ -3,13 +3,16 @@
 #include <internal/vm.hpp>
 #include <internal/sources/cgroup_source.hpp>
 #include <internal/sources/cpuid_source.hpp>
+#include <internal/sources/lparstat_source.hpp>
 #include <internal/detectors/docker_detector.hpp>
 #include <internal/detectors/hyperv_detector.hpp>
 #include <internal/detectors/kvm_detector.hpp>
+#include <internal/detectors/lpar_detector.hpp>
 #include <internal/detectors/lxc_detector.hpp>
 #include <internal/detectors/openvz_detector.hpp>
 #include <internal/detectors/virtualbox_detector.hpp>
 #include <internal/detectors/vmware_detector.hpp>
+#include <internal/detectors/wpar_detector.hpp>
 #include <leatherman/logging/logging.hpp>
 
 #if defined(_WIN32)
@@ -43,6 +46,7 @@ namespace whereami {
 
         sources::cpuid cpuid_source;
         sources::cgroup cgroup_source;
+        sources::lparstat lparstat_source;
         sources::system_profiler system_profiler_source;
 
         auto virtualbox_result = detectors::virtualbox(cpuid_source, smbios_source, system_profiler_source);
@@ -85,6 +89,18 @@ namespace whereami {
 
         if (hyperv_result.valid()) {
             results.emplace_back(hyperv_result);
+        }
+
+        auto lpar_result = detectors::lpar(lparstat_source);
+
+        if (lpar_result.valid()) {
+            results.emplace_back(lpar_result);
+        }
+
+        auto wpar_result = detectors::wpar(lparstat_source);
+
+        if (wpar_result.valid()) {
+            results.emplace_back(wpar_result);
         }
 
         return results;

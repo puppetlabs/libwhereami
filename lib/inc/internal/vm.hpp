@@ -130,4 +130,14 @@ namespace whereami { namespace vm {
      */
     constexpr static char const* ldom{"ldom"};
 
+    /**
+     * The name for AIX LPAR
+     */
+    constexpr static char const* lpar{"lpar"};
+
+    /**
+     * The name for AIX WPAR
+     */
+    constexpr static char const* wpar{"wpar"};
+
 }}  // namespace whereami::vm
