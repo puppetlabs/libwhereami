@@ -50,6 +50,7 @@ set_target_properties(lib${PROJECT_NAME} PROPERTIES VERSION "${PROJECT_VERSION_M
 target_link_libraries(lib${PROJECT_NAME}
     ${LEATHERMAN_LIBRARIES}
     ${Boost_LIBRARIES}
+    ${CMAKE_THREAD_LIBS_INIT}
 )
 
 symbol_exports(lib${PROJECT_NAME} "${CMAKE_CURRENT_LIST_DIR}/inc/${PROJECT_NAME}/export.h")

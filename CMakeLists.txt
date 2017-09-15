@@ -33,13 +33,15 @@ if(LEATHERMAN_USE_LOCALES)
     set(BOOST_COMPONENTS locale)
 endif()
 
-list(APPEND BOOST_COMPONENTS filesystem regex)
+## Pull in helper macros for working with leatherman libraries
+include(leatherman)
+
+list(APPEND BOOST_COMPONENTS filesystem regex system thread)
 
 # Add other dependencies
 find_package(Boost 1.54 REQUIRED COMPONENTS ${BOOST_COMPONENTS})
 
-## Pull in helper macros for working with leatherman libraries
-include(leatherman)
+find_package(Threads)
 
 # Display a summary of the features
 include(FeatureSummary)
@@ -55,4 +57,3 @@ enable_cpplint()
 
 add_cppcheck_dirs("${PROJECT_SOURCE_DIR}/lib")
 enable_cppcheck()
-

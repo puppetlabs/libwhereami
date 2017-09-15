@@ -26,6 +26,7 @@ add_executable(lib${PROJECT_NAME}_test $<TARGET_OBJECTS:libprojectsrc> ${TEST_CA
 target_link_libraries(lib${PROJECT_NAME}_test
     ${Boost_LIBRARIES}
     ${LEATHERMAN_LIBRARIES}
+    ${CMAKE_THREAD_LIBS_INIT}
 )
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin" AND BOOST_STATIC AND LEATHERMAN_USE_LOCALES)
