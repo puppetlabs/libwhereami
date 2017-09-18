@@ -1,3 +1,4 @@
+#include <internal/vm.hpp>
 #include <internal/detectors/xen_detector.hpp>
 #include <leatherman/file_util/file.hpp>
 #include <leatherman/logging/logging.hpp>
@@ -36,14 +37,17 @@ namespace whereami { namespace detectors {
     }
 
     result xen(const cpuid& cpuid_source) {
-        result res{"xen"};
+        result res {vm::xen};
 
-        if (!has_xen_path()) {
+        // The Xen CPUID vendor string will only show up on HVM
+        auto is_hvm = cpuid_source.has_vendor("XenVMMXenVMM");
+
+        if (!is_hvm && !has_xen_path()) {
             return res;
         }
 
         res.validate();
-        res.set("context", cpuid_source.has_vendor("XenVMMXenVMM") ? "hvm" : "pv");
+        res.set("context", is_hvm ? "hvm" : "pv");
 
         // Determine whether this is dom0 or domU
         res.set("privileged", is_xen_privileged());

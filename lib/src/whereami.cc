@@ -3,20 +3,22 @@
 #include <internal/vm.hpp>
 #include <internal/sources/cgroup_source.hpp>
 #include <internal/sources/cpuid_source.hpp>
+#include <internal/sources/system_profiler_source.hpp>
 #include <internal/detectors/docker_detector.hpp>
 #include <internal/detectors/hyperv_detector.hpp>
 #include <internal/detectors/kvm_detector.hpp>
 #include <internal/detectors/lxc_detector.hpp>
+#include <internal/detectors/nspawn_detector.hpp>
 #include <internal/detectors/openvz_detector.hpp>
 #include <internal/detectors/virtualbox_detector.hpp>
 #include <internal/detectors/vmware_detector.hpp>
+#include <internal/detectors/xen_detector.hpp>
 #include <leatherman/logging/logging.hpp>
 
 #if defined(_WIN32)
 #include <internal/sources/wmi_source.hpp>
 #else
 #include <internal/sources/dmi_source.hpp>
-#include <internal/sources/system_profiler_source.hpp>
 #endif
 
 using namespace std;
@@ -69,6 +71,12 @@ namespace whereami {
             results.emplace_back(lxc_result);
         }
 
+        auto nspawn_result = detectors::nspawn(cgroup_source);
+
+        if (nspawn_result.valid()) {
+            results.emplace_back(nspawn_result);
+        }
+
         auto openvz_result = detectors::openvz();
 
         if (openvz_result.valid()) {
@@ -85,6 +93,12 @@ namespace whereami {
 
         if (hyperv_result.valid()) {
             results.emplace_back(hyperv_result);
+        }
+
+        auto xen_result = detectors::xen(cpuid_source);
+
+        if (xen_result.valid()) {
+            results.emplace_back(xen_result);
         }
 
         return results;
