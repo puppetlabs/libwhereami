@@ -23,16 +23,19 @@ set(PROJECT_SOURCES
     "src/detectors/docker_detector.cc"
     "src/detectors/hyperv_detector.cc"
     "src/detectors/kvm_detector.cc"
+    "src/detectors/lpar_detector.cc"
     "src/detectors/lxc_detector.cc"
     "src/detectors/nspawn_detector.cc"
     "src/detectors/virtualbox_detector.cc"
     "src/detectors/vmware_detector.cc"
+    "src/detectors/wpar_detector.cc"
     "src/detectors/xen_detector.cc"
     "src/metadata.cc"
     "src/result.cc"
     "src/sources/cgroup_source.cc"
     "src/sources/cpuid_source.cc"
     "src/sources/dmi_source.cc"
+    "src/sources/lparstat_source.cc"
     "src/sources/smbios_base.cc"
     "src/sources/system_profiler_source.cc")
 
@@ -50,6 +53,7 @@ set_target_properties(lib${PROJECT_NAME} PROPERTIES VERSION "${PROJECT_VERSION_M
 target_link_libraries(lib${PROJECT_NAME}
     ${LEATHERMAN_LIBRARIES}
     ${Boost_LIBRARIES}
+    ${CMAKE_THREAD_LIBS_INIT}
 )
 
 symbol_exports(lib${PROJECT_NAME} "${CMAKE_CURRENT_LIST_DIR}/inc/${PROJECT_NAME}/export.h")
