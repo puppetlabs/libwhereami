@@ -10,7 +10,7 @@ using namespace std;
 
 SCENARIO("Using the LPAR detector") {
     WHEN("Running inside a LPAR") {
-        lparstat_fixture lparstat_source{"output/lparstat/lpar.txt"};
+        lparstat_fixture lparstat_source {"5.3.0.0", "output/lparstat/lpar.txt"};
         auto res = lpar(lparstat_source);
         THEN("the result is valid") {
             REQUIRE(res.valid());
