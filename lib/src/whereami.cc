@@ -7,6 +7,7 @@
 #include <internal/detectors/docker_detector.hpp>
 #include <internal/detectors/hyperv_detector.hpp>
 #include <internal/detectors/kvm_detector.hpp>
+#include <internal/detectors/ldom_detector.hpp>
 #include <internal/detectors/lpar_detector.hpp>
 #include <internal/detectors/lxc_detector.hpp>
 #include <internal/detectors/openvz_detector.hpp>
@@ -109,6 +110,14 @@ namespace whereami {
         if (zone_result.valid()) {
             results.emplace_back(zone_result);
         }
+
+#if defined(__sparc__)
+        auto ldom_result = detectors::ldom();
+
+        if (ldom_result.valid()) {
+            results.emplace_back(ldom_result);
+        }
+#endif
 
         return results;
     }

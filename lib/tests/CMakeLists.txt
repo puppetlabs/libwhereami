@@ -7,6 +7,7 @@ set(TEST_CASES
     "detectors/docker_detector.cc"
     "detectors/hyperv_detector.cc"
     "detectors/kvm_detector.cc"
+    "detectors/ldom_detector.cc"
     "detectors/lpar_detector.cc"
     "detectors/lxc_detector.cc"
     "detectors/nspawn_detector.cc"
