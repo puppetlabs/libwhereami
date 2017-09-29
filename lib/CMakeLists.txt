@@ -30,6 +30,7 @@ set(PROJECT_SOURCES
     "src/detectors/vmware_detector.cc"
     "src/detectors/wpar_detector.cc"
     "src/detectors/xen_detector.cc"
+    "src/detectors/zone_detector.cc"
     "src/metadata.cc"
     "src/result.cc"
     "src/sources/cgroup_source.cc"
