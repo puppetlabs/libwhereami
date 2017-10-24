@@ -23,7 +23,7 @@ namespace whereami { namespace testing { namespace lparstat {
          */
         bool collect_aix_version_from_oslevel() override {
             parse_oslevel_output(version_string_);
-            return true;
+            return this->version_.first > 0;
         }
 
         /**

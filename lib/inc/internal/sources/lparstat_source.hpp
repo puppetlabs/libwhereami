@@ -12,6 +12,11 @@ namespace whereami { namespace sources {
     struct lparstat_data
     {
         /**
+         * Default empty constructor
+         */
+        lparstat_data(): partition_name(""), partition_number(0), wpar_key(0), wpar_configured_id(0) { }
+
+        /**
          * The partition name
          */
         std::string partition_name;

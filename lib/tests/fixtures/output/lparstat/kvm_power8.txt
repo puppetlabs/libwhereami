@@ -1,0 +1,1 @@
+lparstat: is not supported on the Power KVM pSeries Guest platform

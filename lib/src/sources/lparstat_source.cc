@@ -66,7 +66,7 @@ namespace whereami { namespace sources {
 
         parse_oslevel_output(oslevel_result.output);
 
-        return true;
+        return version_.first > 0;
     }
 
     void lparstat::parse_oslevel_output(std::string const& oslevel_output)
@@ -156,4 +156,4 @@ namespace whereami { namespace sources {
         });
     }
 
-}}
+}}  // whereami::sources
