@@ -24,18 +24,28 @@ msgid "{1}: file could not be read."
 msgstr ""
 
 #. debug
+#: lib/src/detectors/zone_detector.cc
+msgid "zonename executable not found"
+msgstr ""
+
+#. debug
+#: lib/src/detectors/zone_detector.cc
+msgid "Error while running zonename ({1})"
+msgstr ""
+
+#. debug
+#: lib/src/detectors/zone_detector.cc
+msgid "zoneadm executable not found"
+msgstr ""
+
+#. debug
+#: lib/src/detectors/zone_detector.cc
+msgid "Error while running `zoneadm list -p` ({1})"
+msgstr ""
+
+#. debug
 #: lib/src/sources/cgroup_source.cc
 msgid "File {!} could not be read"
-msgstr ""
-
-#. debug
-#: lib/src/sources/dmi_source.cc
-msgid " not found."
-msgstr ""
-
-#. debug
-#: lib/src/sources/dmi_source.cc
-msgid "Using dmidecode to query DMI information."
 msgstr ""
 
 #. debug
@@ -50,7 +60,27 @@ msgstr ""
 
 #. debug
 #: lib/src/sources/dmi_source.cc
+msgid " not found."
+msgstr ""
+
+#. debug
+#: lib/src/sources/dmi_source.cc
 msgid "{1}: {2}."
+msgstr ""
+
+#. debug
+#: lib/src/sources/lparstat_source.cc
+msgid "oslevel executable not found"
+msgstr ""
+
+#. debug
+#: lib/src/sources/lparstat_source.cc
+msgid "lparstat executable not found"
+msgstr ""
+
+#. debug
+#: lib/src/sources/lparstat_source.cc
+msgid "Error while running lparstat ({1})"
 msgstr ""
 
 #. debug
