@@ -96,7 +96,7 @@ namespace whereami { namespace detectors {
         auto virtinfo_result = lth_exe::execute(virtinfo_path, vector<string> {"-a", "-p"});
 
         if (!virtinfo_result.success) {
-            LOG_DEBUG("Error while running virtinfo -a -p ({1})");
+            LOG_DEBUG("Error while running virtinfo -a -p ({1})", virtinfo_result.exit_code);
             return res;
         }
 
