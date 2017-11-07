@@ -25,7 +25,7 @@ namespace whereami { namespace sources {
         string contents;
 
         if (!lth_file::read(file_path, contents)) {
-            LOG_DEBUG("File {!} could not be read", file_path);
+            LOG_DEBUG("File {1} could not be read", file_path);
             return;
         }
 
