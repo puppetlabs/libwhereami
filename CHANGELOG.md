@@ -1,10 +1,15 @@
 # Change Log
 
+## [0.1.3] - 2017-00-00
+
+This is a new entry from the 0.1.x branch which should be included in the master changelog after an automatic mergeup.
+
 ## [0.1.2] - 2017-09-20
 
 ### Additions
 
 - Included detectors for Xen and systemd-nspawn.
+- Added a new entry here in the 0.1.x branch; It should appear in the correct place in the master branch after an automatic mergeup.
 
 ### Fixes
 
