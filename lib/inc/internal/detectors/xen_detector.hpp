@@ -18,7 +18,7 @@ namespace whereami { namespace detectors {
      * Path to the directory holding Xen's capabilities file.
      * /proc/xen/capabilities contains the string "control_d" on dom0, and is absent on domU.
      */
-    static const std::string xen_path {"proc/xen"};
+    static const std::string xen_path {"/proc/xen"};
 
     /**
      * Determine whether the current domain has a /proc/xen directory. This should be present on both PV and HVM.
