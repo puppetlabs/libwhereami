@@ -1,0 +1,29 @@
+#pragma once
+
+#include <string>
+
+#define LIBWHEREAMI_TESTS_DIRECTORY "@CMAKE_CURRENT_LIST_DIR@"
+
+namespace whereami { namespace testing {
+
+    /**
+     * The path to the fixtures root directory
+     */
+    static const std::string fixture_root {std::string{LIBWHEREAMI_TESTS_DIRECTORY} + "/fixtures/"};
+
+    /**
+     * Load data from a fixture file into a string
+     * @param name A file path relative to the fixtures root directory
+     * @param data A string in which to store the contents of the fixture file
+     * @return boolean Returns whether the fixture was found and read
+     */
+    bool load_fixture(std::string const& base_path, std::string& data);
+
+    /**
+     * Find the full path for a file in the fixtures root directory
+     * @param base_path A file path relative to the fixtures root directory
+     * @return string Returns the full path to the file
+     */
+    std::string fixture_full_path(std::string const& base_path);
+
+}}  // namespace whereami::testing

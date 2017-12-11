@@ -1,0 +1,46 @@
+Name:   init
+State:  S (sleeping)
+Tgid:   1
+Pid:    1
+PPid:   0
+TracerPid:      0
+Uid:    0       0       0       0
+Gid:    0       0       0       0
+Utrace: 0
+FDSize: 64
+Groups:
+envID:  3549
+VPid:   1
+StopState:      0
+VmPeak:    33208 kB
+VmSize:    33208 kB
+VmLck:         0 kB
+VmHWM:      2588 kB
+VmRSS:      1520 kB
+VmData:     1020 kB
+VmStk:        88 kB
+VmExe:       248 kB
+VmLib:      3084 kB
+VmPTE:        88 kB
+VmPTD:        16 kB
+VmSwap:      200 kB
+Threads:        1
+SigQ:   0/63378
+SigPnd: 0000000000000000
+ShdPnd: 0000000000000000
+SigBlk: 0000000000000000
+SigIgn: 0000000000001000
+SigCgt: 00000001a0016623
+SigSvd: 0000000000000000
+CapInh: 00000000bdecffff
+CapPrm: 00000000bdecffff
+CapEff: 00000000bdecffff
+CapBnd: 00000000fdccefff
+Cpus_allowed:   ff
+Cpus_allowed_list:      0-7
+Mems_allowed:   00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000000,00000001
+Mems_allowed_list:      0
+voluntary_ctxt_switches:        477935
+nonvoluntary_ctxt_switches:     1029
+TaskUB: 3549
+MMUB:   3549

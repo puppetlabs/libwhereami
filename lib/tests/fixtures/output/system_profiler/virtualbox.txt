@@ -1,0 +1,16 @@
+Hardware:
+
+    Hardware Overview:
+
+      Model Name: MacBook Pro
+      Model Identifier: MacBookPro11,3
+      Processor Speed: 2.69 GHz
+      Number of Processors: 1
+      Total Number of Cores: 2
+      L2 Cache (per Processor): 256 KB
+      L3 Cache (per Processor): 12 MB
+      Memory: 2 GB
+      Boot ROM Version: VirtualBox
+      SMC Version (system): 2.3f35
+      Serial Number (system): 0
+      Hardware UUID: B64A21B6-2753-419E-A3BD-A5F28E0ACDF0

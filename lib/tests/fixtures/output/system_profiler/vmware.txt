@@ -1,0 +1,17 @@
+Hardware:
+
+    Hardware Overview:
+
+      Model Name: Mac
+      Model Identifier: VMware7,1
+      Processor Speed: 2.19 GHz
+      Number of Processors: 2
+      Total Number of Cores: 2
+      L2 Cache (per Processor): 256 KB
+      L3 Cache (per Processor): 6 MB
+      Memory: 2 GB
+      Boot ROM Version: VMW71.00V.0.B64.1307300729
+      SMC Version (system): 1.16f8
+      Serial Number (system): VMWQiKnt+gSYlGGr+6MVPk0vw
+      Hardware UUID: 00000000-0000-1000-8000-0050569BDE3D
+

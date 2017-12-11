@@ -1,0 +1,11 @@
+11:cpu,cpuacct:/machine.slice/machine-name.scope
+10:hugetlb:/
+9:blkio:/machine.slice/machine-name.scope
+8:perf_event:/
+7:devices:/machine.slice/machine-name.scope
+6:memory:/machine.slice/machine-name.scope
+5:cpuset:/
+4:net_cls,net_prio:/
+3:pids:/machine.slice/machine-name.scope
+2:freezer:/
+1:name=systemd:/machine.slice/machine-name.scope
