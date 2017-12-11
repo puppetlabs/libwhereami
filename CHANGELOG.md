@@ -1,28 +1,25 @@
 # Change Log
-All notable changes to this project will be documented in this file.
-This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [0.2.0] - TBD
+## [0.1.2] - 2017-09-20
 
-### Summary
+### Additions
 
-Fixed minor bugs and irritations.
-
-### Features
-- Bumped Leatherman submodule from bc900e3d494a3932f97e90b8c6d5916690295a24 to a1627940f269b65537ee1b5f87c0624866218fd3.
-- Added specific git commit to @PROJECT_NAME_UPPER@_VERSION_WITH_COMMIT
-- Split `cpplint` and `cppcheck` into their own Jenkins CI jobs.
+- Included detectors for Xen and systemd-nspawn.
 
 ### Fixes
-- Fixed no-op acceptance Rake task for use in Jenkins CI.
 
-## [0.1.0] - 2015-07-08
+- Fixed segfault when WMI is available but reports no data for some queries.
 
-### Summary
+## [0.1.1] - 2017-09-08
 
-Initial release of cpp-project-template, an example C++11 project.
+### Fixes
 
-### Features
-- Basic command-line skeleton with dynamic library in C++.
-- Travis and AppVeyor CI jobs, coveralls.io triggered from Travis, and no-op acceptance Rake tasks.
-- Relies on the Leatherman C++ utility library.
+- Fixed segfault while attempting to collect data from `dmidecode` when it returns empty output.
+- Fixed segfaults in CPUID instruction calls on MacOS 10.11+ and static 32-bit environments.
+
+## [0.1.0] - 2017-08-30
+
+Initial release of libwhereami; Supported platforms are Linux, Windows, and MacOS.
+
+- Data sources for WMI, DMI, CPUID, cgroups, system_profiler
+- Detectors for Docker, Hyper-V, KVM, LXC, OpenVZ, VirtualBox, VMWare
