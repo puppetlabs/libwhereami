@@ -1,4 +1,9 @@
 # Change Log
+## [0.1.3] - 2018-01-18
+
+### Fixes
+
+- Fix malformed debug print in cgroup source
 
 ## [0.1.2] - 2017-09-20
 
