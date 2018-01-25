@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.2.2)
-project(whereami VERSION 0.1.3)
+project(whereami VERSION 0.1.4)
 
 string(MAKE_C_IDENTIFIER ${PROJECT_NAME} PROJECT_C_NAME)
 string(TOUPPER ${PROJECT_C_NAME} PROJECT_NAME_UPPER)
