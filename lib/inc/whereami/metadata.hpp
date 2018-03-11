@@ -51,7 +51,7 @@ namespace whereami {
          * @return
          */
         template<typename T>
-        T get(std::string const& key) const throw(boost::bad_get)
+        T get(std::string const& key) const
         {
             auto it = data_.find(key);
             if (it == data_.end()) {
