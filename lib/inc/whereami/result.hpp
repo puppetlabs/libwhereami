@@ -58,7 +58,7 @@ namespace whereami {
          * @return Returns the value
          */
         template<typename T>
-        T get(std::string const& key) const throw(boost::bad_get)
+        T get(std::string const& key) const
         {
             return metadata_.get<T>(key);
         }
