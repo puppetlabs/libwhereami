@@ -6,7 +6,7 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: whereami 0.2.0\n"
+"Project-Id-Version: whereami 0.3.0\n"
 "Report-Msgid-Bugs-To: docs@puppet.com\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
@@ -28,7 +28,8 @@ msgid "Error while running virtinfo -a -p ({1})"
 msgstr ""
 
 #. debug
-#: lib/src/detectors/openvz_detector.cc lib/src/sources/dmi_source.cc
+#: lib/src/detectors/openvz_detector.cc
+#: lib/src/sources/dmi_source.cc
 msgid "{1}: file could not be read."
 msgstr ""
 
