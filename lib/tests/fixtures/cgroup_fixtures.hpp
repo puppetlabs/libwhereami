@@ -35,6 +35,7 @@ namespace whereami { namespace testing { namespace cgroup {
     class cgroup_fixture_path : public sources::cgroup_base
     {
     public:
+        // cppcheck-suppress passedByValue
         explicit cgroup_fixture_path(std::string fixture_path)
             : fixture_path_(fixture_full_path(std::move(fixture_path))) { }
         std::string cgroup_path() const override { return fixture_path_; }

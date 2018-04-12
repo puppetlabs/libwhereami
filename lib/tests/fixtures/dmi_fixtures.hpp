@@ -26,7 +26,9 @@ namespace whereami { namespace testing { namespace dmi {
          * @param dmidecode_path
          * @param sys_path
          */
+        // cppcheck-suppress passedByValue
         explicit dmi_fixture(std::string dmidecode_path = DMIDECODE_NONE,
+                             // cppcheck-suppress passedByValue
                              std::string sys_path       = SYS_NONE)
             : dmidecode_fixture_path_(std::move(dmidecode_path)),
               sys_fixture_path_(std::move(sys_path)) { }
