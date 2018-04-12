@@ -31,6 +31,6 @@ namespace whereami { namespace detectors {
      * @param root The root of the file system
      * @return Whether the Xen capabilities file indicates dom0
      */
-    bool is_xen_privileged(std::string root = "/");
+    bool is_xen_privileged(std::string const& root = "/");
 
 }}  // namespace whereami::detectors
