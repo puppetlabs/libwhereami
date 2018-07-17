@@ -5,12 +5,6 @@
 #include <sstream>
 #include <string>
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wstrict-aliasing"
-#include <boost/thread/thread.hpp>
-#include <boost/chrono/duration.hpp>
-#pragma GCC diagnostic pop
-
 using namespace std;
 using namespace boost::filesystem;
 
