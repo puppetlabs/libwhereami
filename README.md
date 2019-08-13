@@ -91,14 +91,29 @@ for (auto const& result : results) {
 
 Prepare the CMake build directory:
 
-```
+```sh
 mkdir build-release
 cd build-release
 cmake ..
 ```
 
-Optionally, also prepare the debug environment:
+If you want to build a dynamic lib, you need another parameter:
+
+```sh
+cmake -DBUILD_SHARED_LIBS=ON ..
 ```
+
+In case you want to compile it to package it for your most loved Linux
+distribution, you may want to set a different install prefix (as an example,
+you can take a look at the Archlinux [PKGBUILD](https://git.archlinux.org/svntogit/community.git/tree/trunk/PKGBUILD?h=packages/libwhereami)):
+
+```sh
+cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr ..
+```
+
+Optionally, also prepare the debug environment:
+
+```sh
 mkdir build-debug
 cd build-debug
 cmake -DCMAKE_BUILD_TYPE=Debug ..
