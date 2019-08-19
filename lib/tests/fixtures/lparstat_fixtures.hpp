@@ -13,6 +13,7 @@ namespace whereami { namespace testing { namespace lparstat {
          * @param aix_version_string
          * @param lparstat_fixture_path
          */
+        // cppcheck-suppress passedByValue
         explicit lparstat_fixture(std::string aix_version_string, std::string lparstat_fixture_path)
         : version_string_(move(aix_version_string)), lparstat_fixture_path_(move(lparstat_fixture_path)) { }
 

@@ -1,50 +1,39 @@
-language: cpp
-compiler:
-  - gcc
-sudo: false
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-      - boost-latest
-    packages:
-      - gcc-4.8
-      - g++-4.8
-      - libboost-filesystem1.55-dev
-      - libboost-program-options1.55-dev
-      - libboost-regex1.55-dev
-      - libboost-date-time1.55-dev
-      - libboost-thread1.55-dev
-      - libboost-log1.55-dev
-      - libboost-locale1.55-dev
-      - libboost-chrono1.55-dev
+sudo: required
+services:
+  - docker
 
 before_install:
-  # Use a predefined install location; cppcheck requires the cfg location is defined at compile-time.
-  - mkdir -p $USERDIR
-  # grab a pre-built cmake 3.2.3
-  - wget https://s3.amazonaws.com/kylo-pl-bucket/cmake-3.2.3-Linux-x86_64.tar.gz
-  - tar xzvf cmake-3.2.3-Linux-x86_64.tar.gz --strip 1 -C $USERDIR
-  # grab a released leatherman tarball
-  - wget https://github.com/puppetlabs/leatherman/releases/download/${LEATHERMAN_VERSION}/leatherman.tar.gz
-  - tar xzvf leatherman.tar.gz -C $USERDIR
+  - docker pull gcr.io/cpp-projects/cpp-ci:1
 
 script:
-  - ./.travis_target.sh
+  - >
+    docker run -v `pwd`:/libwhereami gcr.io/cpp-projects/cpp-ci:1 /bin/bash -c "
+    wget https://github.com/puppetlabs/leatherman/releases/download/${LEATHERMAN_VERSION}/leatherman.tar.gz &&
+    tar xzvf leatherman.tar.gz --strip 1 -C / &&
+    cd /libwhereami &&
+    cmake $EXTRA_VARS . &&
+    mkdir dest &&
+    make $TARGET DESTDIR=/libwhereami/dest VERBOSE=1 -j2 &&
+    { [[ '$COVERALLS' != 'ON' ]] || coveralls --gcov-options '\-lp' -r . -b . -e src -e vendor >/dev/null || true; }
+    "
+  - if [[ $DO_RELEASE = true ]]; then tar czvf libwhereami.tar.gz `find dest -type f -print`; fi
 
 env:
   global:
-    - USERDIR=/tmp/userdir
-    - PYTHONUSERBASE=$USERDIR
-    - PATH=$USERDIR/bin:$PATH
-    - LD_LIBRARY_PATH=$USERDIR/lib:$LD_LIBRARY_PATH
-    - LEATHERMAN_VERSION=0.7.1
+    - LEATHERMAN_VERSION=1.4.0
   matrix:
-    - TRAVIS_TARGET=DOXYGEN
-    - TRAVIS_TARGET=CPPLINT
-    - TRAVIS_TARGET=CPPCHECK
-    - TRAVIS_TARGET=RELEASE
-    - TRAVIS_TARGET=DEBUG
+    - TARGET=cpplint
+    - TARGET=cppcheck
+    - TARGET="all test install ARGS=-V" DO_RELEASE=true EXTRA_VARS="-DBOOST_STATIC=ON"
+    - TARGET="all test install ARGS=-V" EXTRA_VARS="-DBOOST_STATIC=ON -DCMAKE_BUILD_TYPE=Debug -DCOVERALLS=ON" COVERALLS=ON
 
-notifications:
-  email: false
+deploy:
+  provider: releases
+  api_key:
+    secure: ONcPJj2pEhmHELwl2k2ZSbbtNXPqJOCNsJHu6Qr0hBaSXsaOPssxAqOToTBYZpS3tFmR8+nLQjPbbURVSz3a+SGYngkqA1Hwqv2ukemaFFI5Fiy/8t4wwEUKgAie2SK2J6ch2QgbzM0PnLOhBiTah+1r9spFzcp9aBnDxRE0pQk8GCsFq0KwIHvi+ROIIcrc0FfmsG5zwzuz8WlmmGiO2Bac6u/u2Qammr8TDctW3dfWdInWGQzIRn1T/3z9G2/D68Gw7SjfS7R6KYaO99KgBViJA61dWaa93DK8An/r7ps3i2uqkC+1yoFoy38oglAr9TflPphm8LJ4ncZDH+bG+uSpvffeHGNw2Oc5kcaciKkHKgihrmN5Dvpe8zxENMOEZTsJhd0C0m7L+Y9WHdd6m3pgRFWZyrCvLa0zomMuReDKrnvaRkTeHWU4eRxzIqJBjTBzJVjiMVniMV1sdQwUlnxeqEuGoIBYphgwdTidvw5H8IuUGH1x1xEjrKOH1JiY4rN3Mmy+5r5AfAWLzxNkljHlg8aqaUINwDGh+Af22nVgJx8K2bGxV3X50l0c3Bm4kKL0DaOH8G2YBJagXyeUmj/iXHCUcK6Vma9L+DrBbsfOzTErurEe3vAoYKmhE/2T6CMtzSDZiWznAWAyw+e+Rtb5zBUX8lydOBbgc9qzV6I=
+  file: libwhereami.tar.gz
+  skip_cleanup: true
+  on:
+    repo: puppetlabs/libwhereami
+    tags: true
+    condition: $DO_RELEASE = true

@@ -20,7 +20,7 @@ namespace whereami { namespace detectors {
         return exists(xen_path);
     }
 
-    bool is_xen_privileged(string root) {
+    bool is_xen_privileged(string const& root) {
         // dom0 and domU should both have a /proc/xen directory, but only hvm will have a capabilities file there
         path capabilities_path {root + xen_path + "/capabilities"};
         if (!is_regular_file(capabilities_path)) {
