@@ -12,7 +12,7 @@ SCENARIO("Using a metadata object") {
             REQUIRE(data.get<string>("foo") == "bar");
         }
         THEN("it is not retrievable as another data type") {
-            REQUIRE_THROWS_AS(data.get<bool>("foo"), boost::bad_get);
+            REQUIRE_THROWS_AS(data.get<bool>("foo"), boost::bad_get&);
         }
     }
 
@@ -24,7 +24,7 @@ SCENARIO("Using a metadata object") {
             REQUIRE(data.get<string>("foo") == "bar");
         }
         THEN("it is not retrievable as another data type") {
-            REQUIRE_THROWS_AS(data.get<bool>("foo"), boost::bad_get);
+            REQUIRE_THROWS_AS(data.get<bool>("foo"), boost::bad_get&);
         }
     }
 
@@ -35,7 +35,7 @@ SCENARIO("Using a metadata object") {
             REQUIRE(data.get<bool>("foo"));
         }
         THEN("it is not retrievable as another data type") {
-            REQUIRE_THROWS_AS(data.get<string>("foo"), boost::bad_get);
+            REQUIRE_THROWS_AS(data.get<string>("foo"), boost::bad_get&);
         }
     }
 
@@ -46,7 +46,7 @@ SCENARIO("Using a metadata object") {
             REQUIRE(data.get<int>("foo") == 1);
         }
         THEN("It is not retrievable as a boolean") {
-            REQUIRE_THROWS_AS(data.get<bool>("foo"), boost::bad_get);
+            REQUIRE_THROWS_AS(data.get<bool>("foo"), boost::bad_get&);
         }
     }
 }
