@@ -38,6 +38,10 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin" AND BOOST_STATIC AND LEATHERMAN_USE_LO
     target_link_libraries(lib${PROJECT_NAME}_test iconv)
 endif()
 
+IF (CMAKE_SYSTEM_NAME MATCHES "(Solaris|SunOS)" )
+    target_link_libraries(lib${PROJECT_NAME}_test socket)
+ENDIF(CMAKE_SYSTEM_NAME MATCHES "(Solaris|SunOS)" )      
+                                                         
 add_test(NAME "unit_tests" COMMAND lib${PROJECT_NAME}_test)
 
 # Generate a file containing the path to the fixtures
