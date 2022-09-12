@@ -1,0 +1,41 @@
+name: CI checks
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  ci_checks:
+    strategy:
+      matrix:
+        options:
+          - make_command: cpplint
+          - make_command: cppcheck
+          - make_command: all test install ARGS=-V
+            cmake_extra_vars: -DBOOST_STATIC=ON -DCMAKE_BUILD_TYPE=Debug -DCOVERALLS=ON
+            coveralls: ON
+          - make_command: all test install ARGS=-V
+            cmake_extra_vars: -DBOOST_STATIC=ON
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: pull_docker_image
+        run: docker pull gcr.io/cpp-projects/cpp-ci:1
+      - name: run_make
+        run: |
+          git status
+          docker run -v `pwd`:/libwhereami gcr.io/cpp-projects/cpp-ci:1 /bin/bash -c "
+          wget https://github.com/puppetlabs/leatherman/releases/download/1.4.0/leatherman.tar.gz &&
+          tar xzvf leatherman.tar.gz --strip 1 -C / &&
+          cd /libwhereami &&
+          cmake ${{ matrix.options.cmake_extra_vars }} . &&
+          mkdir dest &&
+          make ${{ matrix.options.make_command }} DESTDIR=/libwhereami/dest VERBOSE=1 -j2 &&
+          { [[ '${{ matrix.options.coveralls }}' != 'ON' ]] || coveralls --gcov-options '\-lp' -r . -b . -e src -e vendor >/dev/null || true; }
+          "
+ 
