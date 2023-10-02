@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: pull_docker_image
         run: docker pull gcr.io/cpp-projects/cpp-ci:1
       - name: run_make
