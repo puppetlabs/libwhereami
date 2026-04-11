@@ -1,0 +1,103 @@
+# Georgian translation for cpp-project-template.
+# Copyright (C) 2926 Puppet <docs@puppet.com>
+# This file is distributed under the same license as the cpp-project-template package.
+# Ekaterine Papava <papava.e@gtu.ge>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: cpp-project-template 0.2.0\n"
+"Report-Msgid-Bugs-To: docs@puppet.com\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2026-04-11 05:06+0200\n"
+"Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
+"Language-Team: Georgian <(nothing)>\n"
+"Language: ka\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.9\n"
+
+#: exe/cpp-project-template.cc
+msgid ""
+"Synopsis\n"
+"========\n"
+"\n"
+"Example command-line utility.\n"
+"\n"
+"Usage\n"
+"=====\n"
+"\n"
+"  cpp-project-template [options]\n"
+"\n"
+"Options\n"
+"=======\n"
+"\n"
+"{1}\n"
+"Description\n"
+"===========\n"
+"\n"
+"Displays its own version string."
+msgstr ""
+"მოკლე შინაარსი\n"
+"========\n"
+"\n"
+"ბრძანების სტრიქონის მაგალითი პროგრამა.\n"
+"\n"
+"გამოყენება\n"
+"=====\n"
+"\n"
+"cpp-project-template [პარამეტრები]\n"
+"\n"
+"პარამეტრები\n"
+"=======\n"
+"\n"
+"{1}\n"
+"აღწერა\n"
+"===========\n"
+"\n"
+"აჩვენებს საკუთარი ვერსიის სტრიქონს."
+
+#: exe/cpp-project-template.cc
+msgid "Enable full debugging."
+msgstr "სრული გამართვის ჩართვა."
+
+#: exe/cpp-project-template.cc
+msgid "Print this help message."
+msgstr "ამ დახმარების შეტყობინების გამოტანა."
+
+#: exe/cpp-project-template.cc
+msgid "Silences all output."
+msgstr "ეკრანზე გამოტანის სრული დადუმება."
+
+#: exe/cpp-project-template.cc
+msgid "Enable verbosity."
+msgstr "დიაგნოსტიკური შეტყობინებების ჩართვა."
+
+#: exe/cpp-project-template.cc
+msgid "Print the program's version number and exit."
+msgstr "პროგრამის ვერსიის გამოტანა და გასვლა."
+
+#: exe/cpp-project-template.cc
+msgid ""
+"Set logging level.\n"
+"Supported levels are: none, trace, debug, info, warn, error, and fatal."
+msgstr ""
+"დააყენეთ ჟურნალის დონე.\n"
+"მხარდაჭერილი დონეებია: none, trace, debug, info, warn, error, and fatal."
+
+#: exe/cpp-project-template.cc
+msgid "Error: {1}"
+msgstr "შეცდომა: {1}"
+
+#: exe/cpp-project-template.cc
+msgid "unhandled exception: {1}"
+msgstr "დაუმუშავებელი გამონაკლისი: {1}"
+
+#: exe/cpp-project-template.cc
+msgid "Hello!"
+msgstr "მოგესალმებით!"
+
+#. debug
+#: lib/src/cpp-project-template.cc
+msgid "cpp-project-template version is {1}"
+msgstr "cpp-project-template-ის ვერსიაა {1}"
